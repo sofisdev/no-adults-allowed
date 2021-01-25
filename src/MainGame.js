@@ -17,16 +17,19 @@
     let obstacle = null;
     let score = 0;
     let intervalId = 0
-    let timer = null;
+    let timer = 120;
     let canvas = null;
     let ctx = null;
     let offset = 50;
 
-    //Background house properties - outer limits to drwawing
-    let bgnX = 50;
+    //Background house  + player properties - outer limits to drwawing
+    let bgnX = offset;
     let bgnY = offset;
-    let bgnWidth = 0;
-    let bgnHeight = 0;
+    let bgnWidth = 700;
+    let bgnHeight = 700;
+    let wallXN = bgnX + 500;
+    let playerX = bgnX;
+    let playerY = 650;
 
     //Wall properties
     let wallHeight = 75;
@@ -37,23 +40,56 @@
     let isRightArrow = false;
     let isUpArrow = false;
     let isDownArrow = false;
-    let keyDownHandler = (event) => {
+
+    //Obstacles
+    let enemies = [];
+    let eX = null;
+    
+    document.addEventListener('keydown', (event) => {
         event.preventDefault() // stop the arrow keys scrolling the pag
 
         if (event.keyCode == 39 || event.key === 'ArrowRight'){
             isLeftArrow = false;
             isRightArrow = true;        
-            
-        } else if(event.keyCode == 37 || event.key === 'ArrowLeft') {
+            isUpArrow = false;
+            isDownArrow = false;
+        } 
+        else if(event.keyCode == 37 || event.key === 'ArrowLeft') {
             isLeftArrow = true;
             isRightArrow = false;
+            isUpArrow = false;
+            isDownArrow = false;
         }
-    } 
+        else if(event.keyCode == 38 || event.key === 'ArrowUp') {
+            isLeftArrow = false;
+            isRightArrow = false;
+            isUpArrow = true;
+            isDownArrow = false;
+        }
+        else if(event.keyCode == 39 || event.key === 'ArrowDown') {
+            isLeftArrow = false;
+            isRightArrow = false;
+            isUpArrow = false;
+            isDownArrow = true;
+        }
+    })
 
-    function drawCanvas() {
+    document.addEventListener("keyup", (event) => {
+        isRightArrow = false;
+        isLeftArrow = false;
+        isUpArrow = false;
+        isDownArrow = false;
+    })
+
+    function setCanvas() {
         //create canvas
         canvas = document.querySelector("canvas");
         ctx = canvas.getContext("2d");
+        
+    }
+
+    function drawCanvas() {
+        //create canvas 
         canvas.style.backgroundColor="white"
         canvas.setAttribute("width", '800');
         canvas.setAttribute("height", '800') 
@@ -61,9 +97,6 @@
     }
 
     function drawLimits() {
-        bgnWidth = canvas.width-offset*2;
-        bgnHeight = canvas.height-offset*2;
-        
         ctx.beginPath()
         ctx.fillStyle = "#FAAA8C"
         ctx.fillRect(bgnX,bgnY,bgnWidth,bgnHeight)
@@ -110,44 +143,100 @@
         ctx.closePath()
     }
 
-   
+    function drawWall() {
+        //Wall north horizontal cut
+        ctx.beginPath()
+        ctx.fillStyle = "white"
+        ctx.fillRect(wallXN,bgnY,20,400)
+        ctx.closePath()
+
+        //Wall north vertical side
+        ctx.beginPath()
+        ctx.fillStyle = "#855746"
+        ctx.fillRect(wallXN,bgnY + 400,20,wallHeight)
+        ctx.closePath()
+    }
+
     function draw() {
         //Methods to draw the inside house basics
-        
+        ctx.clearRect(0, 0, canvas.width, canvas.height)
         drawCanvas()
         drawLimits()
         drawFloor()
         drawBackWall()
+        drawWall()
+
+        //Write score
+        ctx.font = '30px Allerta Stencil'
+        ctx.fillText('Score: ' + score, bgnX, 30)
+        ctx.fillText('Time: ' + timer + ' seconds', bgnX + 200, 30)
         
         //create player from Player class
-        player = new Player(canvas, bgnX, bgnHeight - 50)
-        
-        drawPlayer()
-
-    }
-
-    function drawPlayer() {
-
-        if(isLeftArrow) {
-            player.x -= player.xMove
-        }
-        else if (isRightArrow) {
-            player.x += player.xMove
-        }
-        
+        player = new Player(canvas, playerX, playerY)
         player.draw()
 
+        updateGame()
+
+
+
+        if(isLeftArrow && (playerX > bgnX || (playerX > 570 && playerY < 450) )) {
+            playerX -= player.xMove
+        }
+        else if (isRightArrow && playerX + player.width < canvas.width - offset) {
+            playerX += player.xMove
+        }
+        else if (isUpArrow && playerY > wallBottom) {
+            playerY -= player.yMove
+        }
+        else if (isDownArrow && playerY + player.height < canvas.height - offset) {
+            playerY += player.yMove
+        }
+        
     }
 
-     function game() { 
-        // intervalID = setInterval(() => {
-        //     requestAnimationFrame(draw)
-        // }, 10)
-        draw()
+    function createObstacles() {
+        let enemyFire = new Fire(bgnX + bgnWidth, 600)
+        enemies.push(enemyFire)
     }
 
-    window.addEventListener("keydown", keyDownHandler);
+    function updateGame() {
+        //ctx.clearRect(0, 0, canvas.width, canvas.height)
+        timer--
+        if (timer > 0) {
+            createObstacles();
+        }
 
+        for (let i = 0; i < enemies.length; i++) {
+            let e = enemies[i]
+
+            if (eX < bgnX) {
+               enemies.splice(i, 1) 
+            }
+
+            e.draw()
+        }
+
+        //CHECK COLLISIONS
+    }
+
+    function game() { 
+        setCanvas()
+        intervalID = setInterval(() => {
+            requestAnimationFrame(draw)
+        }, 100)
+
+        if (timer <=0) {
+            clearInterval(intervalId)
+        }
+       
+    }
+
+    window.addEventListener("load", () => {
+        canvas.style.display = 'none';
+    });
+
+    
+    
 
 
 
