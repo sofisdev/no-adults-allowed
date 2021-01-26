@@ -21,6 +21,8 @@
     let canvas = null;
     let ctx = null;
     let offset = 50;
+    let gameIsOver = false;
+    let finishGame = null;
 
     //Background house - outer limits to drwawing
     let bgnX = offset;
@@ -36,7 +38,7 @@
     //Obstacles
     let eX = null;
     let eY = null;
-    let enemies = [{eX:bgnWidth + 10 , eY: 600}]
+    let enemies = [{eX:bgnWidth , eY: 600}]
 
     //Wall properties
     let wallHeight = 75;
@@ -200,6 +202,10 @@
         
     }
 
+    function getRandomArbitrary(min, max) {
+        return Math.random() * (max - min) + min;
+    }
+
     function createObstacles() {
         // loop over a set of enemies to create the first animation
         for(let i = 0; i < enemies.length; i++) {
@@ -211,21 +217,33 @@
             enemies[i].eX -= 10
 
             // check if an enemy has reached a certain position
-            if (enemies[i].eX == 650) {
+            if (enemies[i].eX == 500) {
             // add a new pipe at a random y value
                 enemies.push({
-                    eX: canvas.width + 30,
-                    eY: Math.floor(Math.random() * 500)
+                    eX: bgnWidth,
+                    eY: Math.floor(getRandomArbitrary(0.23, 1) * bgnHeight)
                 })
+            }
+            else if (enemies[i].eX <= bgnX) {
+                enemies.splice(i, 1)
             }
 
             if(enemies[i].eX == playerX + 50) {
                 console.log('time to end the game')
+                gameIsOver = true;
                 clearInterval()
-                // gameOver()
+                //CHECK THIS!!!
+                finishGame()
+                
             }
         }
     }
+
+    let switchtoGameOver = (callback) => {
+        finishGame = callback();
+    }
+
+    
     
     // gameOver() {
 

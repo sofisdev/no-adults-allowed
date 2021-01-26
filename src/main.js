@@ -29,13 +29,21 @@ function loadPage() {
         //removeGameOverScreen()
         loadGameScreen()    
         
-        
-        // function to starts the game from the class
+        if (!gameIsOver) {
+            // function to starts the game from the class
         game();
+        }
+        else {
+            console.log('game is over')
+            switchtoGameOver(gameOver)
+        }
+        
+
+
     }
 
     //function to be called when the game is over and gameOverScreen appears
-    function gameOver () {
+    function gameOver() {
         removeGameScreen()
         loadGameOverScreen()
     }
