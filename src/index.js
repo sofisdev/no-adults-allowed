@@ -15,7 +15,7 @@
 
 let player = null;
 let obstacle = null;
-let score = 0;
+let score = 10;
 let intervalId = 0
 let timer = 120;
 let canvas = null;
@@ -38,7 +38,9 @@ let playerY = 650;
 //Obstacles
 let eX = null;
 let eY = null;
-let enemies = [{eX:bgnWidth , eY: 600}]
+let fireObstacle = [{eX:bgnWidth , eY: 600}]
+let ratObstacle = [{tX:bgnWidth , tY: 300}]
+let pizzaHelp = [{pX:bgnWidth / 2 , pY: 450}]
 
 //Wall properties
 let wallHeight = 75;
@@ -166,6 +168,13 @@ function drawWall() {
 
 function draw() {
 
+    if(score > 0) {
+        gameIsOver = false
+    }
+    else {
+        gameIsOver = true
+    }
+
     if(!gameIsOver){
         //Methods to draw the inside house basics
         ctx.clearRect(0, 0, canvas.width, canvas.height)
@@ -176,8 +185,12 @@ function draw() {
         drawWall()
 
         //Obstacles
-        createObstacles()
-
+        createFire()
+        createRat()
+        // if (score < 7){
+        //     createPizza()
+        // }
+        
         //Write score
         ctx.font = '30px Allerta Stencil'
         ctx.fillText('Score: ' + score, bgnX, 30)
@@ -200,6 +213,7 @@ function draw() {
         else if (isDownArrow && playerY + player.height < canvas.height - offset) {
             playerY += player.yMove
         }
+
     }
     else {
         clearInterval(intervalId)
@@ -213,51 +227,110 @@ function getRandomArbitrary(min, max) {
     return Math.random() * (max - min) + min;
 }
 
-function createObstacles() {
-    // loop over a set of enemies to create the first animation
-    for(let i = 0; i < enemies.length; i++) {
-        let enemyFire = new Fire(canvas, enemies[i].eX, enemies[i].eY)
+function createFire() {
+    // loop over a set of fireObstacle to create the first animation
+    for(let i = 0; i < fireObstacle.length; i++) {
+        let enemyFire = new Fire(canvas, fireObstacle[i].eX, fireObstacle[i].eY)
         enemyFire.draw()
 
-        // make the enemies move towards the left on the x axis
+        // make the fireObstacle move towards the left on the x axis
         // decrementing the x value does that
-        enemies[i].eX -= 10
+        fireObstacle[i].eX -= 10
 
         // check if an enemy has reached a certain position
-        if (enemies[i].eX == 500) {
-        // add a new pipe at a random y value
-            enemies.push({
+        if (fireObstacle[i].eX == 500) {
+        // add a new fireObstacle at a random y value
+            fireObstacle.push({
                 eX: bgnWidth,
                 eY: Math.floor(getRandomArbitrary(0.23, 1) * bgnHeight)
             })
         }
-        else if (enemies[i].eX <= bgnX) {
-            enemies.splice(i, 1)
+        else if (fireObstacle[i].eX <= bgnX) {
+            fireObstacle.splice(i, 1)
         }
 
-        if(enemies[i].eX == playerX + 50) {
-            gameIsOver = true;
-            
+        if((fireObstacle[i].eX == playerX + 50 || fireObstacle[i].eX + 50 == playerX) && ((playerY <= fireObstacle[i].eY && playerY + 100 > fireObstacle[i].eY) || (playerY <= fireObstacle[i].eY + 50 && playerY + 100 > fireObstacle[i].eY + 50))) {
+            score--
+            fireObstacle.splice(i, 1)
         }
     }
 }
 
+function createRat() {
+    // loop over a set of ratObstacle to create the first animation
+    for(let i = 0; i < ratObstacle.length; i++) {
+        let enemyRat = new Rat(canvas, ratObstacle[i].tX, ratObstacle[i].tY)
+        enemyRat.draw()
+
+        // make the ratObstacle move towards the left on the x axis
+        // decrementing the x value does that
+        ratObstacle[i].tX -= 10
+
+        // check if an enemy has reached a certain position
+        if (ratObstacle[i].tX == 500) {
+        // add a new rat at a random y value
+            ratObstacle.push({
+                tX: bgnWidth - 60,
+                tY: Math.floor(getRandomArbitrary(0.23, 1) * bgnHeight)
+            })
+        }
+        else if (ratObstacle[i].tX <= bgnX) {
+            ratObstacle.splice(i, 1)
+        }
+
+        if((ratObstacle[i].tX == playerX + 50 || ratObstacle[i].tX + 50 == playerX) && ((playerY <= ratObstacle[i].tY && playerY + 100 > ratObstacle[i].tY) || (playerY <= ratObstacle[i].tY + 50 && playerY + 100 > ratObstacle[i].tY + 50))) {
+            score--
+            ratObstacle.splice(i, 1)
+        }
+    }
+}
+
+function createPizza() {
+    // loop over a set of pizzaHelp to create the first animation
+    for(let i = 0; i < pizzaHelp.length; i++) {
+        let pizza = new Pizza(canvas, pizzaHelp[i].pX, pizzaHelp[i].pY)
+        pizza.draw()
+
+        
+        pizzaHelp.push({
+            pX: Math.floor(getRandomArbitrary(0.23, 1) * bgnWidth),
+            pY: Math.floor(getRandomArbitrary(0.23, 1) * bgnHeight)
+        })
+        
+
+        if(pizzaHelp.length > 0) {
+            if((pizzaHelp[i].pX == playerX + 50 || pizzaHelp[i].pX + 50 == playerX) && ((playerY <= pizzaHelp[i].pY && playerY + 100 > pizzaHelp[i].pY) || (playerY <= pizzaHelp[i].pY + 50 && playerY + 100 > pizzaHelp[i].pY + 50))) {
+                score++
+                pizzaHelp.splice(i, 1)
+            }
+        }
+        
+    }
+}
+
 function game() { 
+    //set canvas selector
     setCanvas()
     
+    //set main interval animation
     intervalId = setInterval(() => {
-        console.log('interval')
         requestAnimationFrame(draw)
     }, 100) 
 }
 
 function setNewGame(){
     ctx.clearRect(0, 0, canvas.width, canvas.height)
-    enemies = [{eX:bgnWidth , eY: 600}]
+    fireObstacle = [{eX:bgnWidth , eY: 600}]
+    ratObstacle = [{tX:bgnWidth , tY: 300}]
+    pizzaHelp = [{pX:bgnWidth , pY: 300}]
+    score = 10
+    playerX = bgnX;
+    playerY = 650;
 }
 
-//Functions to switch between SHEETS
+//--------------------------------------------------//
 
+//Functions to switch between SHEETS
 // Changing DOM element depending on the screen
 function DomElement(htmlString) {
     var div = document.createElement("div");
@@ -301,13 +374,7 @@ function gameOver() {
 
 
 //SPLASH SCREEN
-function loadSplashScreen() {
-
-    //MOVE BACKGROUND??
-    // let intervalId = setInterval(() => {
-    //     body.style.backgroundPositionX -= 1
-    // }, 10);
-    
+function loadSplashScreen() {   
     splashScreen = document.createElement('div')
     splashScreen.className = "splashScreen"
     splashScreen.innerHTML = `

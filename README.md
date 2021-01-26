@@ -3,13 +3,13 @@
 [Click here to see deployed game](http://github.com)
 
 ## Description
-"No Adults Allowed" is a game where the player is a kid who is alone in his house. The player has to move vertically and horizontally through the rooms, avoidind incoming obstacles/enemies that appear randomly in the space. 
+"No Adults Allowed" is a game where the player is a kid who is alone in his house. The player has to move vertically and horizontally through the rooms, avoidind incoming obstacles/fireObstacle that appear randomly in the space. 
 The game ends either when the player's score reaches 0 or when the timer stops, showing the final score to the user. 
 The score will increase if the player eats food or finds weapons, and it will decrease every time the player hits an obstacle or an enemy.
 
 
 ## MVP
-- Enemies or obstacles will randomly appear in the space
+- fireObstacle or obstacles will randomly appear in the space
 - Touching an enemy or obstacle decreases the score
 - Food or weapons will randomly appear in the space
 - Eating food or getting weapons increases the score
