@@ -165,40 +165,47 @@ function drawWall() {
 }
 
 function draw() {
-    //Methods to draw the inside house basics
-    ctx.clearRect(0, 0, canvas.width, canvas.height)
-    drawCanvas()
-    drawLimits()
-    drawFloor()
-    drawBackWall()
-    drawWall()
 
-    //Obstacles
-    createObstacles()
+    if(!gameIsOver){
+        //Methods to draw the inside house basics
+        ctx.clearRect(0, 0, canvas.width, canvas.height)
+        drawCanvas()
+        drawLimits()
+        drawFloor()
+        drawBackWall()
+        drawWall()
 
-    //Write score
-    ctx.font = '30px Allerta Stencil'
-    ctx.fillText('Score: ' + score, bgnX, 30)
-    ctx.fillText('Time: ' + timer + ' seconds', bgnX + 200, 30)
+        //Obstacles
+        createObstacles()
+
+        //Write score
+        ctx.font = '30px Allerta Stencil'
+        ctx.fillText('Score: ' + score, bgnX, 30)
+        ctx.fillText('Time: ' + timer + ' seconds', bgnX + 200, 30)
+
+        //create player from Player class
+        player = new Player(canvas, playerX, playerY)
+        player.draw()
+
+        // update position of player depending on arrows
+        if(isLeftArrow && (playerX > bgnX || (playerX > 570 && playerY < 450) )) {
+            playerX -= player.xMove
+        }
+        else if (isRightArrow && playerX + player.width < canvas.width - offset) {
+            playerX += player.xMove
+        }
+        else if (isUpArrow && playerY > wallBottom) {
+            playerY -= player.yMove
+        }
+        else if (isDownArrow && playerY + player.height < canvas.height - offset) {
+            playerY += player.yMove
+        }
+    }
+    else {
+        clearInterval(intervalId)
+        gameOver()
+    }
     
-    //create player from Player class
-    player = new Player(canvas, playerX, playerY)
-    player.draw()
-
-    // updateGame()
-
-    if(isLeftArrow && (playerX > bgnX || (playerX > 570 && playerY < 450) )) {
-        playerX -= player.xMove
-    }
-    else if (isRightArrow && playerX + player.width < canvas.width - offset) {
-        playerX += player.xMove
-    }
-    else if (isUpArrow && playerY > wallBottom) {
-        playerY -= player.yMove
-    }
-    else if (isDownArrow && playerY + player.height < canvas.height - offset) {
-        playerY += player.yMove
-    }
     
 }
 
@@ -229,11 +236,7 @@ function createObstacles() {
         }
 
         if(enemies[i].eX == playerX + 50) {
-            console.log('time to end the game')
             gameIsOver = true;
-            clearInterval()
-            //CHECK THIS!!!
-            gameOver()
             
         }
     }
@@ -241,16 +244,17 @@ function createObstacles() {
 
 function game() { 
     setCanvas()
-    intervalID = setInterval(() => {
+    
+    intervalId = setInterval(() => {
         console.log('interval')
         requestAnimationFrame(draw)
-    }, 100)
-
-    // if (timer <=0) {
-    //     clearInterval(intervalId)
-    // }  
+    }, 100) 
 }
 
+function setNewGame(){
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
+    enemies = [{eX:bgnWidth , eY: 600}]
+}
 
 //Functions to switch between SHEETS
 
@@ -263,43 +267,36 @@ function DomElement(htmlString) {
     return div.children[0];
   }
 
-
-
 let body = document.querySelector('body')
 
 let splashScreen;
 let gameScreen;
 let gameOverScreen;
 
-
 // to load the splash creen as main page 
 loadSplashScreen();
 
 //function when the game begins, other screens must be removed
 function gameStart() {
-    let playerName = document.querySelector('#playerName').value
     gameIsOver = false;
+    if(gameOverScreen) {
+        removeGameOverScreen()   
+    }
+
     removeSplashScreen()
-    //removeGameOverScreen()
     loadGameScreen()    
     
     if (!gameIsOver) {
         // function to starts the game from the class
     game();
     }
-    else {
-        console.log('game is over')
-        switchtoGameOver(gameOver)
-    }
-    
-
-
 }
 
 //function to be called when the game is over and gameOverScreen appears
 function gameOver() {
     removeGameScreen()
     loadGameOverScreen()
+    setNewGame()
 }
 
 
