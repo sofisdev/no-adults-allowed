@@ -1,5 +1,5 @@
 class Fire {
-    constructor(x, y){
+    constructor(canvas, x, y){
         this.x = x;
         this.y = y;
         this.direction;
@@ -12,7 +12,7 @@ class Fire {
         this.width = 50;
         this.height = 50;
 
-        // this.canvas = canvas;
+        this.canvas = canvas;
         this.ctx = this.canvas.getContext("2d");
 
         this.xMove = 50;
@@ -20,8 +20,10 @@ class Fire {
 
     }
     draw() {
-        this.FireImg.onload = () => {
-            this.ctx.drawImage(this.FireImg, this.x, this.y, this.width, this.height);
-        } 
+        this.ctx.drawImage(this.FireImg, this.x, this.y, this.width, this.height);
+
+        // this.FireImg.onload = () => {
+        //     this.ctx.drawImage(this.FireImg, this.x, this.y, this.width, this.height);
+        // } 
     }
 } 

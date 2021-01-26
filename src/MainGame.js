@@ -22,14 +22,21 @@
     let ctx = null;
     let offset = 50;
 
-    //Background house  + player properties - outer limits to drwawing
+    //Background house - outer limits to drwawing
     let bgnX = offset;
     let bgnY = offset;
     let bgnWidth = 700;
     let bgnHeight = 700;
     let wallXN = bgnX + 500;
+
+    //player properties
     let playerX = bgnX;
     let playerY = 650;
+
+    //Obstacles
+    let eX = null;
+    let eY = null;
+    let enemies = [{eX:bgnWidth + 10 , eY: 600}]
 
     //Wall properties
     let wallHeight = 75;
@@ -41,9 +48,7 @@
     let isUpArrow = false;
     let isDownArrow = false;
 
-    //Obstacles
-    let enemies = [];
-    let eX = null;
+    
     
     document.addEventListener('keydown', (event) => {
         event.preventDefault() // stop the arrow keys scrolling the pag
@@ -166,6 +171,9 @@
         drawBackWall()
         drawWall()
 
+        //Obstacles
+        createObstacles()
+
         //Write score
         ctx.font = '30px Allerta Stencil'
         ctx.fillText('Score: ' + score, bgnX, 30)
@@ -175,9 +183,7 @@
         player = new Player(canvas, playerX, playerY)
         player.draw()
 
-        updateGame()
-
-
+        // updateGame()
 
         if(isLeftArrow && (playerX > bgnX || (playerX > 570 && playerY < 450) )) {
             playerX -= player.xMove
@@ -195,45 +201,68 @@
     }
 
     function createObstacles() {
-        let enemyFire = new Fire(bgnX + bgnWidth, 600)
-        enemies.push(enemyFire)
-    }
+        // loop over a set of enemies to create the first animation
+        for(let i = 0; i < enemies.length; i++) {
+            let enemyFire = new Fire(canvas, enemies[i].eX, enemies[i].eY)
+            enemyFire.draw()
 
-    function updateGame() {
-        //ctx.clearRect(0, 0, canvas.width, canvas.height)
-        timer--
-        if (timer > 0) {
-            createObstacles();
-        }
+            // make the enemies move towards the left on the x axis
+            // decrementing the x value does that
+            enemies[i].eX -= 10
 
-        for (let i = 0; i < enemies.length; i++) {
-            let e = enemies[i]
-
-            if (eX < bgnX) {
-               enemies.splice(i, 1) 
+            // check if an enemy has reached a certain position
+            if (enemies[i].eX == 650) {
+            // add a new pipe at a random y value
+                enemies.push({
+                    eX: canvas.width + 30,
+                    eY: Math.floor(Math.random() * 500)
+                })
             }
 
-            e.draw()
+            if(enemies[i].eX == playerX + 50) {
+                console.log('time to end the game')
+                clearInterval()
+                // gameOver()
+            }
         }
-
-        //CHECK COLLISIONS
     }
+    
+    // gameOver() {
+
+    // }
+
+    // function updateGame() {
+    //     //ctx.clearRect(0, 0, canvas.width, canvas.height)
+    //     timer--
+    //     if (timer > 0) {
+    //         createObstacles();
+    //     }
+
+    //     for (let i = 0; i < enemies.length; i++) {
+    //         let e = enemies[i]
+
+    //         if (eX < bgnX) {
+    //            enemies.splice(i, 1) 
+    //         }
+
+    //         e.draw()
+    //     }
+
+    //     //CHECK COLLISIONS
+    // }
 
     function game() { 
         setCanvas()
         intervalID = setInterval(() => {
+            console.log('interval')
             requestAnimationFrame(draw)
         }, 100)
 
-        if (timer <=0) {
-            clearInterval(intervalId)
-        }
-       
+        // if (timer <=0) {
+        //     clearInterval(intervalId)
+        // }  
     }
 
-    window.addEventListener("load", () => {
-        canvas.style.display = 'none';
-    });
 
     
     

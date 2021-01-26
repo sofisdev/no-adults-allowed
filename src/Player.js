@@ -23,9 +23,10 @@ class Player {
 
     }
     draw() {
-        this.playerImg.onload = () => {
-            this.ctx.drawImage(this.playerImg, this.x, this.y, this.width, this.height);
-        } 
+        this.ctx.drawImage(this.playerImg, this.x, this.y, this.width, this.height);
+        // this.playerImg.onload = () => {
+        //     this.ctx.drawImage(this.playerImg, this.x, this.y, this.width, this.height);
+        // } 
     }
 } 
 
