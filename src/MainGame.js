@@ -243,32 +243,6 @@
         finishGame = callback();
     }
 
-    
-    
-    // gameOver() {
-
-    // }
-
-    // function updateGame() {
-    //     //ctx.clearRect(0, 0, canvas.width, canvas.height)
-    //     timer--
-    //     if (timer > 0) {
-    //         createObstacles();
-    //     }
-
-    //     for (let i = 0; i < enemies.length; i++) {
-    //         let e = enemies[i]
-
-    //         if (eX < bgnX) {
-    //            enemies.splice(i, 1) 
-    //         }
-
-    //         e.draw()
-    //     }
-
-    //     //CHECK COLLISIONS
-    // }
-
     function game() { 
         setCanvas()
         intervalID = setInterval(() => {
