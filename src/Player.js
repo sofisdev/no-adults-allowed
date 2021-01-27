@@ -6,7 +6,7 @@ class Player {
         
         
         this.playerImg = new Image();
-        this.srcP1Front = "../images/girlFront.png";
+        this.srcP1Front = "/images/girlFront.png";
         this.srcP1Back = "../images/girlBack.png";
         this.srcP2Front = "../images/boyFront.png";
         this.srcP2Back = "../images/boyBack.png";
