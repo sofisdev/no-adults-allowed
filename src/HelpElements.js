@@ -6,7 +6,7 @@ class Pizza {
         
         
         this.PizzaImg = new Image();
-        this.imgSrc = "../images/pizza.png";
+        this.imgSrc = "images/pizza.png";
         this.PizzaImg.src = this.imgSrc;
 
         this.width = 50;

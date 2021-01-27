@@ -6,7 +6,7 @@ class Fire {
         
         
         this.FireImg = new Image();
-        this.imgSrc = "../images/fire.png";
+        this.imgSrc = "images/fire.png";
         this.FireImg.src = this.imgSrc;
 
         this.width = 50;
@@ -32,7 +32,7 @@ class Rat {
         
         
         this.RatImg = new Image();
-        this.imgSrc = "../images/rat.png";
+        this.imgSrc = "images/rat.png";
         this.RatImg.src = this.imgSrc;
 
         this.width = 50;
