@@ -126,5 +126,5 @@ Definition of the different states and their transition (transition functions)
 - [Slides Link](http://slides.com)
 
 ### Git
-- [Github repository Link](http://github.com)
-- [Deployment Link](http://github.com)
+- [Github repository Link](https://github.com/SofSanUrb/no-adults-allowed)
+- [Deployment Link](https://sofsanurb.github.io/no-adults-allowed/)

@@ -121,6 +121,12 @@ h2 {
     color: white;
 }
 
+.gameScreen {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+}
+
 /* ELEMENTS FROM GAMEOVERSCREEN */
 .gameOverScreen {
     width: 70%;
@@ -178,6 +184,18 @@ h2 {
     box-shadow: 5px 10px black;
 }
 
+#copyright {
+    padding-top: 40px;
+    padding-bottom: 0px;
+    color:grey;
+}
+
+.gameScreen #copyright {
+    padding-top: 40px;
+    padding-bottom: 20px;
+    color:white;
+    text-align: center;
+}
 
 
 

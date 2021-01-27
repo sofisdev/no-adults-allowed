@@ -57,6 +57,19 @@ let isRightArrow = false;
 let isUpArrow = false;
 let isDownArrow = false;
 
+//Music variables
+let backMusic = new Audio();
+backMusic.src = "audio/backMusic.mp3"
+
+let minusMusic = new Audio();
+minusMusic.src = "audio/minus.ogg"
+minusMusic.volume = 1
+
+let plusMusic = new Audio();
+plusMusic.src = "audio/plus.ogg"
+
+let selectMusic = new Audio();
+selectMusic.src = "audio/select.ogg"
 
 function callDOMevents() {
     document.addEventListener('keydown', (event) => {
@@ -96,6 +109,10 @@ function callDOMevents() {
     })    
 }
 
+function playMusic(music) {
+    music.play();
+    
+}
 
 function setCanvas() {
     //create canvas
@@ -189,7 +206,7 @@ function draw() {
         drawLimits()
         drawFloor()
         drawBackWall()
-        drawWall()
+        //drawWall()
 
         //Obstacles
         createFire()
@@ -201,6 +218,8 @@ function draw() {
         //Write score
         if(score < 5 || timer < 5){
             ctx.fillStyle = "red";
+            backMusic.volume = 1
+            backMusic.playbackRate = 1.5
         }
         ctx.font = '30px Allerta Stencil'
         ctx.fillText('Score: ' + score, bgnX, 30)
@@ -260,6 +279,7 @@ function createFire() {
 
         if((fireObstacle[i].eX == playerX + 50 || fireObstacle[i].eX + 50 == playerX) && ((playerY <= fireObstacle[i].eY && playerY + 100 > fireObstacle[i].eY) || (playerY <= fireObstacle[i].eY + 50 && playerY + 100 > fireObstacle[i].eY + 50))) {
             score--
+            playMusic(minusMusic)
             fireObstacle.splice(i, 1)
         }
     }
@@ -289,6 +309,7 @@ function createRat() {
 
         if((ratObstacle[i].tX == playerX + 50 || ratObstacle[i].tX + 50 == playerX) && ((playerY <= ratObstacle[i].tY && playerY + 100 > ratObstacle[i].tY) || (playerY <= ratObstacle[i].tY + 50 && playerY + 100 > ratObstacle[i].tY + 50))) {
             score--
+            playMusic(minusMusic)
             ratObstacle.splice(i, 1)
         }
     }
@@ -399,15 +420,16 @@ function loadSplashScreen() {
     splashScreen.innerHTML = `
         <h1 class="gameTitle">No Adults<br>Allowed</h1>
         <div class="characterChoice">
-            <h2>1 - Choose your Kid!</h2>
-            <div id="characterImages">
-                <button type="button" id="player1"></button>
-                <button type="button" id="player2"></button>
-            </div>
-            <h2>2 - What's your name?</h2>
+            
+            <h2>1 - What's your name?</h2>
             <div class="chooseName">
                     <label for="playerName"></label>
                     <input type="text" id="playerName" placeholder='Enter your name'>
+            </div>
+            <h2>2 - Choose your Kid!</h2>
+            <div id="characterImages">
+                <button type="button" id="player1"></button>
+                <button type="button" id="player2"></button>
             </div>
         </div>
         <div class="instructions">
@@ -421,8 +443,13 @@ function loadSplashScreen() {
         <div class="start">
             <button id="startBtn" class ="button">START!</button>
         </div>
+        <div id="copyright">©2021 Sofía Sánchez Urbano</div>
     `
     body.appendChild(splashScreen)
+
+    //music
+    playMusic(backMusic)
+
 
     let startBtn = document.querySelector('#startBtn')
     let playerName = document.querySelector('#playerName')
@@ -434,27 +461,27 @@ function loadSplashScreen() {
     //Set conditions to be able to start the game
     playerBtnLeft.addEventListener('click', () => {
         playerLeftSelected = true;
+        playMusic(selectMusic)
     })
 
     playerBtnRight.addEventListener('click', () => {
         playerRightSelected = true;
+        playMusic(selectMusic)
     })
 
     //start game in the event of clicking the startBtn element
     startBtn.addEventListener('click', () => {
         if(playerName.value != "" && (playerLeftSelected || playerRightSelected)) {
             userName = playerName.value;
+            playMusic(selectMusic)
             gameStart()
         }
         else {
             chooseNameLabel.style.color =  "red"
             playerName.style.backgroundColor =  "#FFC9AC"
             chooseTitle.style.color = 'red';
-        }
-
-      
+        }      
     })
-
 }
 
 function removeSplashScreen() {
@@ -472,6 +499,7 @@ function loadGameScreen() {
     <div class="sceneCanvas">
         <canvas></canvas>
     </div>
+    <div id="copyright">©2021 Sofía Sánchez Urbano</div>
 `
     body.appendChild(gameScreen)         
 }
@@ -494,7 +522,7 @@ function loadGameOverScreen() {
             <h2 id="finalScore">test</h2>
             <button id="reStartBtn" class ="button">Play again!</button>
         </div>
-        
+        <div id="copyright">©2021 Sofía Sánchez Urbano</div>
     `
     body.appendChild(gameOverScreen)
 
@@ -502,7 +530,7 @@ function loadGameOverScreen() {
     let finalScoreDOM = document.querySelector('#finalScore')
 
     if(finalScore > 0) {
-        gameOverMessage.innerText = "You won " + userName + "!<br>Time's up! your parents are back!"
+        gameOverMessage.innerText = "You won " + userName + "! \n Time's up! your parents are back!"
         finalScoreDOM.innerHTML = finalScore
     }
     else {
@@ -512,7 +540,19 @@ function loadGameOverScreen() {
     
     let reStartBtn = document.querySelector('#reStartBtn')
     //start game in the event of clicking the reStartBtn element
-    reStartBtn.addEventListener('click', gameStart)
+    reStartBtn.addEventListener('click', () => {
+        //pause current game music and reset the speed in case the game starts again
+        backMusic.pause()
+        backMusic.currentTime = 0
+        backMusic.playbackRate = 1
+
+        //clickin noise
+        playMusic(selectMusic)
+
+        //Restart game and music
+        playMusic(backMusic)
+        gameStart()
+    })
     
 }
 
