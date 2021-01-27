@@ -380,14 +380,14 @@ function loadSplashScreen() {
     splashScreen.innerHTML = `
         <h1 class="gameTitle">No Adults<br>Allowed</h1>
         <div class="characterChoice">
-            <h2>Choose your character</h2>
+            <h2>Choose your character!</h2>
             <div id="characterImages">
                 <button type="button" id="player1"></button>
                 <button type="button" id="player2"></button>
             </div>
             <div class="chooseName">
-                    <label for="name" >What's your name? </label>
-                    <input type="text" id="playerName" maxlength="24">
+                    <label for="playerName">What's your name? </label>
+                    <input type="text" id="playerName" placeholder='Enter your name'>
             </div>
         </div>
         <div class="instructions">
@@ -403,9 +403,18 @@ function loadSplashScreen() {
     body.appendChild(splashScreen)
 
     let startBtn = document.querySelector('#startBtn')
-
+    let playerName = document.querySelector('#playerName')
+    let chooseNameLabel = document.querySelector(".chooseName label")
     //start game in the event of clicking the startBtn element
     startBtn.addEventListener('click', () => {
+        // if(playerName.value != "") {
+        //     gameStart()
+        // }
+        // else {
+        //     chooseNameLabel.style.color =  "red"
+        //     playerName.style.backgroundColor =  "#FFC9AC"
+        // }
+
         gameStart()
     })
 
