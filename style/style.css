@@ -23,6 +23,10 @@ h1 {
     text-align: center;
 }
 
+h2 {
+    text-align:center;
+}
+
 
 /* ELEMENTS FROM SPLASHSCREEN */
 .splashScreen {
@@ -45,12 +49,10 @@ h1 {
     text-align: center;
 }
 
-.chooseName {
-    padding-top: 25px; 
-}
-
 .instructions {
     padding-top: 30px;
+    padding-left: 200px;
+    padding-right: 200px;
 }
 
 .start {
@@ -68,31 +70,33 @@ h1 {
     display: flex;
     justify-content:space-between;
     align-content: center;
-    padding: 0px 25px;
+    padding: 10px 18px;
 }
 
 #characterImages button {
     background-size: contain;
     height: 134px;
     width: 100px;
-    padding:1px;
-    border:10px solid #FAAA8C;
+    border:10px solid #ABF5E9;
     border-radius: 10px;
     
 }
 
+#characterImages button:hover {
+    box-shadow: 5px 10px grey;
+}
+
 #characterImages button:focus {
-    box-shadow: 5px 10px;
-   
+    box-shadow: 5px 10px black;
 }
 
 #player1 {
-    background: url("../images/girlFront.png"), #FAAA8C;
+    background: url("../images/girlFront.png"), #ABF5E9;
  
 }
 
 #player2 {
-    background: url("../images/boyFront.png"),#FAAA8C;
+    background: url("../images/boyFront.png"),#ABF5E9;
    
 }
 
@@ -114,6 +118,7 @@ h1 {
 .gameScreen h1 {
     padding-top: 70px;
     font-size: 5em;
+    color: white;
 }
 
 /* ELEMENTS FROM GAMEOVERSCREEN */
@@ -130,8 +135,17 @@ h1 {
     flex-wrap: wrap; 
 }
 
+.gameOverScreen h1 {
+    padding: 1px;
+    font-size: 3em;
+}
+
 .gameOver {
     text-align: center;
+}
+
+.gameOver h1 {
+    font-size: 2em;
 }
 
 #scoreBar {
@@ -143,7 +157,6 @@ h1 {
 }
 
 #finalScore {
-    background-color: yellow;
     flex-grow: 0.8;
     text-align: center;
     border: 3px solid black;
@@ -152,6 +165,17 @@ h1 {
 #reStartBtn {
     padding: 5px 15px;
     font-size: 1.5em;
+    font-family: "Allerta Stencil";
+    border: 3px solid black;
+}
+
+
+#reStartBtn:hover {
+    box-shadow: 5px 10px grey;
+}
+
+#reStartBtn:focus {
+    box-shadow: 5px 10px black;
 }
 
 

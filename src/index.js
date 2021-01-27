@@ -13,16 +13,21 @@
 //light green = "#ABF5E9"
 //light light green "#D1F3EB"
 
+let playerLeftSelected = false;
+let playerRightSelected = false;
+let userName = "";
 let player = null;
 let obstacle = null;
 let score = 10;
-let intervalId = 0
-let timer = 120;
+let intervalId = 0;
+let timerId = 0;
+let timer = 30;
 let canvas = null;
 let ctx = null;
 let offset = 50;
 let gameIsOver = false;
 let finishGame = null;
+let finalScore = 0;
 
 //Background house - outer limits to drwawing
 let bgnX = offset;
@@ -53,42 +58,44 @@ let isUpArrow = false;
 let isDownArrow = false;
 
 
+function callDOMevents() {
+    document.addEventListener('keydown', (event) => {
+        event.preventDefault() // stop the arrow keys scrolling the pag
 
-document.addEventListener('keydown', (event) => {
-    event.preventDefault() // stop the arrow keys scrolling the pag
+        if (event.keyCode == 39 || event.key === 'ArrowRight'){
+            isLeftArrow = false;
+            isRightArrow = true;        
+            isUpArrow = false;
+            isDownArrow = false;
+        } 
+        else if(event.keyCode == 37 || event.key === 'ArrowLeft') {
+            isLeftArrow = true;
+            isRightArrow = false;
+            isUpArrow = false;
+            isDownArrow = false;
+        }
+        else if(event.keyCode == 38 || event.key === 'ArrowUp') {
+            isLeftArrow = false;
+            isRightArrow = false;
+            isUpArrow = true;
+            isDownArrow = false;
+        }
+        else if(event.keyCode == 39 || event.key === 'ArrowDown') {
+            isLeftArrow = false;
+            isRightArrow = false;
+            isUpArrow = false;
+            isDownArrow = true;
+        }
+    })
 
-    if (event.keyCode == 39 || event.key === 'ArrowRight'){
+    document.addEventListener("keyup", (event) => {
+        isRightArrow = false;
         isLeftArrow = false;
-        isRightArrow = true;        
         isUpArrow = false;
         isDownArrow = false;
-    } 
-    else if(event.keyCode == 37 || event.key === 'ArrowLeft') {
-        isLeftArrow = true;
-        isRightArrow = false;
-        isUpArrow = false;
-        isDownArrow = false;
-    }
-    else if(event.keyCode == 38 || event.key === 'ArrowUp') {
-        isLeftArrow = false;
-        isRightArrow = false;
-        isUpArrow = true;
-        isDownArrow = false;
-    }
-    else if(event.keyCode == 39 || event.key === 'ArrowDown') {
-        isLeftArrow = false;
-        isRightArrow = false;
-        isUpArrow = false;
-        isDownArrow = true;
-    }
-})
+    })    
+}
 
-document.addEventListener("keyup", (event) => {
-    isRightArrow = false;
-    isLeftArrow = false;
-    isUpArrow = false;
-    isDownArrow = false;
-})
 
 function setCanvas() {
     //create canvas
@@ -175,7 +182,7 @@ function draw() {
         gameIsOver = true
     }
 
-    if(!gameIsOver){
+    if(!gameIsOver && timer > 0){
         //Methods to draw the inside house basics
         ctx.clearRect(0, 0, canvas.width, canvas.height)
         drawCanvas()
@@ -192,9 +199,12 @@ function draw() {
         // }
         
         //Write score
+        if(score < 5 || timer < 5){
+            ctx.fillStyle = "red";
+        }
         ctx.font = '30px Allerta Stencil'
         ctx.fillText('Score: ' + score, bgnX, 30)
-        ctx.fillText('Time: ' + timer + ' seconds', bgnX + 200, 30)
+        ctx.fillText('Home Alone time: ' + timer + ' seconds', bgnX + 200, 30)
 
         //create player from Player class
         player = new Player(canvas, playerX, playerY)
@@ -213,14 +223,13 @@ function draw() {
         else if (isDownArrow && playerY + player.height < canvas.height - offset) {
             playerY += player.yMove
         }
-
     }
     else {
+        finalScore = score;
         clearInterval(intervalId)
+        clearInterval(timerId)
         gameOver()
     }
-    
-    
 }
 
 function getRandomArbitrary(min, max) {
@@ -310,12 +319,21 @@ function createPizza() {
 
 function game() { 
     //set canvas selector
+    callDOMevents()
     setCanvas()
     
     //set main interval animation
     intervalId = setInterval(() => {
         requestAnimationFrame(draw)
     }, 100) 
+
+    timerId = setInterval(() => {
+        requestAnimationFrame(updateTimer)
+    }, 1000) 
+}
+
+function updateTimer() {
+    timer --
 }
 
 function setNewGame(){
@@ -324,6 +342,7 @@ function setNewGame(){
     ratObstacle = [{tX:bgnWidth , tY: 300}]
     pizzaHelp = [{pX:bgnWidth , pY: 300}]
     score = 10
+    timer = 30
     playerX = bgnX;
     playerY = 650;
 }
@@ -380,20 +399,23 @@ function loadSplashScreen() {
     splashScreen.innerHTML = `
         <h1 class="gameTitle">No Adults<br>Allowed</h1>
         <div class="characterChoice">
-            <h2>Choose your character!</h2>
+            <h2>1 - Choose your Kid!</h2>
             <div id="characterImages">
                 <button type="button" id="player1"></button>
                 <button type="button" id="player2"></button>
             </div>
+            <h2>2 - What's your name?</h2>
             <div class="chooseName">
-                    <label for="playerName">What's your name? </label>
+                    <label for="playerName"></label>
                     <input type="text" id="playerName" placeholder='Enter your name'>
             </div>
         </div>
         <div class="instructions">
-            <h2>Instructions</h2>
+            <h2>-------  Instructions  -------</h2>
             <div>
-                <p>Example text do this do that blablablabla</p>
+                <p>Easy! As any other kid, avoid dangerous incoming risks and eat as much pizza as possible before your parents come back home!<br>
+                <br>Arrow Right - Move RIGHT <br>Arrow Left - Move LEFT<br>Arrow Up - Move UP<br>Arrow Down - Move DOWN
+                </p>
             </div>
         </div>
         <div class="start">
@@ -405,17 +427,32 @@ function loadSplashScreen() {
     let startBtn = document.querySelector('#startBtn')
     let playerName = document.querySelector('#playerName')
     let chooseNameLabel = document.querySelector(".chooseName label")
+    let playerBtnLeft = document.querySelector('#player1')
+    let playerBtnRight = document.querySelector('#player2')
+    let chooseTitle = document.querySelector('.characterChoice h2')
+
+    //Set conditions to be able to start the game
+    playerBtnLeft.addEventListener('click', () => {
+        playerLeftSelected = true;
+    })
+
+    playerBtnRight.addEventListener('click', () => {
+        playerRightSelected = true;
+    })
+
     //start game in the event of clicking the startBtn element
     startBtn.addEventListener('click', () => {
-        // if(playerName.value != "") {
-        //     gameStart()
-        // }
-        // else {
-        //     chooseNameLabel.style.color =  "red"
-        //     playerName.style.backgroundColor =  "#FFC9AC"
-        // }
+        if(playerName.value != "" && (playerLeftSelected || playerRightSelected)) {
+            userName = playerName.value;
+            gameStart()
+        }
+        else {
+            chooseNameLabel.style.color =  "red"
+            playerName.style.backgroundColor =  "#FFC9AC"
+            chooseTitle.style.color = 'red';
+        }
 
-        gameStart()
+      
     })
 
 }
@@ -461,6 +498,17 @@ function loadGameOverScreen() {
     `
     body.appendChild(gameOverScreen)
 
+    let gameOverMessage = document.querySelector('.gameOver h1')
+    let finalScoreDOM = document.querySelector('#finalScore')
+
+    if(finalScore > 0) {
+        gameOverMessage.innerText = "You won " + userName + "!<br>Time's up! your parents are back!"
+        finalScoreDOM.innerHTML = finalScore
+    }
+    else {
+        gameOverMessage.innerText = 'Oups ' + userName + ' you lost!'
+        finalScoreDOM.innerHTML = 0
+    }
     
     let reStartBtn = document.querySelector('#reStartBtn')
     //start game in the event of clicking the reStartBtn element
