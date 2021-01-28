@@ -21,6 +21,9 @@ let obstacle = null;
 let score = 10;
 let intervalId = 0;
 let timerId = 0;
+let pizzaTimerId = 0;
+let frameNo = 0;
+let isTimeForPizza = false;
 let timer = 30;
 let canvas = null;
 let ctx = null;
@@ -60,6 +63,7 @@ let isDownArrow = false;
 //Music variables
 let backMusic = new Audio();
 backMusic.src = "audio/backMusic.ogg"
+
 
 let minusMusic = new Audio();
 minusMusic.src = "audio/minus.ogg"
@@ -111,7 +115,7 @@ function callDOMevents() {
 
 function playMusic(music) {
     music.play();
-    
+    music.volume = 0.3
 }
 
 function setCanvas() {
@@ -192,14 +196,24 @@ function drawWall() {
 
 function draw() {
 
-    if(score > 0) {
-        gameIsOver = false
-    }
-    else {
+    if(score < 0 || timer < 0) {
         gameIsOver = true
     }
+    else {
+        gameIsOver = false
+    }
 
-    if(!gameIsOver && timer > 0){
+    if(gameIsOver){
+        finalScore = score;
+        clearInterval(intervalId)
+        clearInterval(timerId)
+        clearInterval(pizzaTimerId)
+        gameOver()
+    }
+    else {
+        if (backMusic.currentTime < 0){
+            playMusic(backMusic)
+        }
         //Methods to draw the inside house basics
         ctx.clearRect(0, 0, canvas.width, canvas.height)
         drawCanvas()
@@ -211,16 +225,18 @@ function draw() {
         //Obstacles
         createFire()
         createRat()
-        // if (score < 7){
-        //     createPizza()
-        // }
-        
+
+        if (isTimeForPizza) {
+            createPizza()
+        }
+
         //Write score
         if(score < 5 || timer < 5){
             ctx.fillStyle = "red";
-            backMusic.volume = 1
+            backMusic.volume = 0.5
             backMusic.playbackRate = 1.5
         }
+
         ctx.font = '30px Allerta Stencil'
         ctx.fillText('Score: ' + score, bgnX, 30)
         ctx.fillText('Home Alone time: ' + timer + ' seconds', bgnX + 200, 30)
@@ -243,12 +259,6 @@ function draw() {
             playerY += player.yMove
         }
     }
-    else {
-        finalScore = score;
-        clearInterval(intervalId)
-        clearInterval(timerId)
-        gameOver()
-    }
 }
 
 function getRandomArbitrary(min, max) {
@@ -263,17 +273,32 @@ function createFire() {
 
         // make the fireObstacle move towards the left on the x axis
         // decrementing the x value does that
-        fireObstacle[i].eX -= 10
-
-        // check if an enemy has reached a certain position
-        if (fireObstacle[i].eX == 500) {
-        // add a new fireObstacle at a random y value
-            fireObstacle.push({
-                eX: bgnWidth,
-                eY: Math.floor(getRandomArbitrary(0.23, 1) * bgnHeight)
-            })
+        
+        if(score < 5 || timer < 5){
+            fireObstacle[i].eX -= 20
+            // check if an enemy has reached a certain position
+            if (fireObstacle.length < 2) {
+            // add a new fireObstacle at a random y value
+                fireObstacle.push({
+                    eX: bgnWidth,
+                    eY: Math.floor(getRandomArbitrary(0.23, 1) * bgnHeight)
+                })
+            }
         }
-        else if (fireObstacle[i].eX <= bgnX) {
+        else {
+            fireObstacle[i].eX -= 10
+            // check if an enemy has reached a certain position
+            if (fireObstacle[i].eX == 500) {
+            // add a new fireObstacle at a random y value
+                fireObstacle.push({
+                    eX: bgnWidth,
+                    eY: Math.floor(getRandomArbitrary(0.23, 1) * bgnHeight)
+                })
+            }
+        }
+
+        
+        if (fireObstacle[i].eX <= bgnX) {
             fireObstacle.splice(i, 1)
         }
 
@@ -291,19 +316,30 @@ function createRat() {
         let enemyRat = new Rat(canvas, ratObstacle[i].tX, ratObstacle[i].tY)
         enemyRat.draw()
 
-        // make the ratObstacle move towards the left on the x axis
-        // decrementing the x value does that
-        ratObstacle[i].tX -= 10
-
-        // check if an enemy has reached a certain position
-        if (ratObstacle[i].tX == 500) {
-        // add a new rat at a random y value
+        if(score < 5 || timer < 5){
+            ratObstacle[i].tX -= 20
+            // check if an enemy has reached a certain position
+            if (ratObstacle.length < 2) {
+            // add a new fireObstacle at a random y value
             ratObstacle.push({
-                tX: bgnWidth - 60,
-                tY: Math.floor(getRandomArbitrary(0.23, 1) * bgnHeight)
-            })
+                    tX: bgnWidth - 60,
+                    tY: Math.floor(getRandomArbitrary(0.23, 1) * bgnHeight)
+                })
+            }
         }
-        else if (ratObstacle[i].tX <= bgnX) {
+        else {
+            ratObstacle[i].tX -= 10
+            // check if an enemy has reached a certain position
+            if (ratObstacle[i].tX == 500) {
+            // add a new fireObstacle at a random y value
+                ratObstacle.push({
+                    tX: bgnWidth - 60,
+                    tY: Math.floor(getRandomArbitrary(0.23, 1) * bgnHeight)
+                })
+            }
+        }
+        
+        if (ratObstacle[i].tX <= bgnX) {
             ratObstacle.splice(i, 1)
         }
 
@@ -318,20 +354,20 @@ function createRat() {
 function createPizza() {
     // loop over a set of pizzaHelp to create the first animation
     for(let i = 0; i < pizzaHelp.length; i++) {
+        
         let pizza = new Pizza(canvas, pizzaHelp[i].pX, pizzaHelp[i].pY)
         pizza.draw()
-
-        
-        pizzaHelp.push({
-            pX: Math.floor(getRandomArbitrary(0.23, 1) * bgnWidth),
-            pY: Math.floor(getRandomArbitrary(0.23, 1) * bgnHeight)
-        })
-        
 
         if(pizzaHelp.length > 0) {
             if((pizzaHelp[i].pX == playerX + 50 || pizzaHelp[i].pX + 50 == playerX) && ((playerY <= pizzaHelp[i].pY && playerY + 100 > pizzaHelp[i].pY) || (playerY <= pizzaHelp[i].pY + 50 && playerY + 100 > pizzaHelp[i].pY + 50))) {
                 score++
+                playMusic(plusMusic)
                 pizzaHelp.splice(i, 1)
+                pizzaHelp.push({
+                    pX: 200,
+                    pY: Math.floor(getRandomArbitrary(0.23, 1) * bgnHeight)
+                })
+                isTimeForPizza = false
             }
         }
         
@@ -351,6 +387,11 @@ function game() {
     timerId = setInterval(() => {
         requestAnimationFrame(updateTimer)
     }, 1000) 
+
+    pizzaTimerId = setInterval(() => {
+        isTimeForPizza = true
+    }, 3000) 
+
 }
 
 function updateTimer() {
@@ -420,7 +461,6 @@ function loadSplashScreen() {
     splashScreen.innerHTML = `
         <h1 class="gameTitle">No Adults<br>Allowed</h1>
         <div class="characterChoice">
-            
             <h2>1 - What's your name?</h2>
             <div class="chooseName">
                     <label for="playerName"></label>
@@ -438,12 +478,16 @@ function loadSplashScreen() {
                 <p>Easy! As any other kid, avoid dangerous incoming risks and eat as much pizza as possible before your parents come back home!<br>
                 <br>Arrow Right - Move RIGHT <br>Arrow Left - Move LEFT<br>Arrow Up - Move UP<br>Arrow Down - Move DOWN
                 </p>
+                <img src="images/valor.png" alt="valor team symbol" width="200" height="200">
             </div>
         </div>
         <div class="start">
             <button id="startBtn" class ="button">START!</button>
         </div>
-        <div id="copyright">©2021 Sofía Sánchez Urbano</div>
+        <div id="copyright">
+            <p>©2021 Sofía Sánchez Urbano</p>
+            
+            </div>
     `
     body.appendChild(splashScreen)
 
@@ -456,7 +500,7 @@ function loadSplashScreen() {
     let chooseNameLabel = document.querySelector(".chooseName label")
     let playerBtnLeft = document.querySelector('#player1')
     let playerBtnRight = document.querySelector('#player2')
-    let chooseTitle = document.querySelector('.characterChoice h2')
+    let chooseTitle = document.querySelectorAll('.characterChoice h2')
 
     //Set conditions to be able to start the game
     playerBtnLeft.addEventListener('click', () => {
@@ -477,9 +521,9 @@ function loadSplashScreen() {
             gameStart()
         }
         else {
-            chooseNameLabel.style.color =  "red"
+            // chooseNameLabel.style.color =  "red"
             playerName.style.backgroundColor =  "#FFC9AC"
-            chooseTitle.style.color = 'red';
+            chooseTitle.forEach(elem => elem.style.color = 'red');
         }      
     })
 }
