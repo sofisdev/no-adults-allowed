@@ -221,7 +221,7 @@ function drawWall() {
 
 function draw() {
 
-    if(score < 0 || timer < 0) {
+    if(score <= 0 || timer <= 0) {
         gameIsOver = true
     }
     else {
@@ -322,12 +322,15 @@ function createFire() {
             }
         }
 
-        
         if (fireObstacle[i].eX <= bgnX) {
             fireObstacle.splice(i, 1)
         }
 
-        if((fireObstacle[i].eX == playerX + 50 || fireObstacle[i].eX + 50 == playerX) && ((playerY <= fireObstacle[i].eY && playerY + 100 > fireObstacle[i].eY) || (playerY <= fireObstacle[i].eY + 50 && playerY + 100 > fireObstacle[i].eY + 50))) {
+        //check collisions
+        if((playerX < fireObstacle[i].eX + 50 &&
+            playerX + 50 > fireObstacle[i].eX &&
+            playerY < fireObstacle[i].eY + 50 &&
+            100 + playerY > fireObstacle[i].eY)) {
             score--
             playMusic(minusMusic)
             fireObstacle.splice(i, 1)
@@ -368,7 +371,11 @@ function createRat() {
             ratObstacle.splice(i, 1)
         }
 
-        if((ratObstacle[i].tX == playerX + 50 || ratObstacle[i].tX + 50 == playerX) && ((playerY <= ratObstacle[i].tY && playerY + 100 > ratObstacle[i].tY) || (playerY <= ratObstacle[i].tY + 50 && playerY + 100 > ratObstacle[i].tY + 50))) {
+        //check collisions
+        if((playerX < ratObstacle[i].tX + 50 &&
+            playerX + 50 > ratObstacle[i].tX &&
+            playerY < ratObstacle[i].tY + 50 &&
+            100 + playerY > ratObstacle[i].tY)) {
             score--
             playMusic(minusMusic)
             ratObstacle.splice(i, 1)
@@ -384,7 +391,10 @@ function createPizza() {
         pizza.draw()
 
         if(pizzaHelp.length > 0) {
-            if((pizzaHelp[i].pX == playerX + 50 || pizzaHelp[i].pX + 50 == playerX) && ((playerY <= pizzaHelp[i].pY && playerY + 100 > pizzaHelp[i].pY) || (playerY <= pizzaHelp[i].pY + 50 && playerY + 100 > pizzaHelp[i].pY + 50))) {
+            if((playerX < pizzaHelp[i].pX + 50 &&
+                playerX + 50 > pizzaHelp[i].pX &&
+                playerY < pizzaHelp[i].pY + 50 &&
+                100 + playerY > pizzaHelp[i].pY)){
                 score++
                 playMusic(plusMusic)
                 pizzaHelp.splice(i, 1)
@@ -395,9 +405,10 @@ function createPizza() {
                 isTimeForPizza = false
             }
         }
-        
     }
+
 }
+
 
 function game() { 
     //set canvas selector
