@@ -68,7 +68,7 @@ let DownDirection = false;
 //Music variables
 let backMusic = new Audio();
 backMusic.src = "audio/backMusic.ogg"
-
+backMusic.autoplay = true;
 
 let minusMusic = new Audio();
 minusMusic.src = "audio/minus.ogg"
