@@ -17,6 +17,8 @@ body {
     font-family: 'Allerta Stencil';
 }
 
+
+
 h1 {
     text-transform: uppercase;
     font-size: 4em;
@@ -39,6 +41,8 @@ h2 {
     flex-direction: column;
     justify-content:space-between;
     align-items: center;
+    transition: all 2s ease-in-out;
+    transform: scaleY(0.95);
 }
 
 .splashScreen h1 {
@@ -108,9 +112,6 @@ h2 {
 .sceneCanvas {
     width: 70%;
     margin: 100px auto;
-    /* padding: 60px 15px; */
-    /* background-color: white; */
-    /* border: 10px solid black; */
     display: flex;
     flex-direction: column;
     justify-content:space-between;
@@ -128,6 +129,7 @@ h2 {
     display: flex;
     flex-direction: column;
     align-content: center;
+    transition: all 2s ease-in-out;
 }
 
 /* ELEMENTS FROM GAMEOVERSCREEN */

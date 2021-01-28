@@ -263,7 +263,7 @@ function draw() {
         }
 
         ctx.font = '30px Allerta Stencil'
-        ctx.fillText('Score: ' + score, bgnX, 30)
+        ctx.fillText('Life pts: ' + score, bgnX, 30)
         ctx.fillText('Home Alone time: ' + timer + ' seconds', bgnX + 200, 30)
 
         //create player from Player class
@@ -302,7 +302,7 @@ function createFire() {
         if(score < 5 || timer < 5){
             fireObstacle[i].eX -= 20
             // check if an enemy has reached a certain position
-            if (fireObstacle.length < 2) {
+            if (fireObstacle.length <= 1 || fireObstacle[i].eX == 550) {
             // add a new fireObstacle at a random y value
                 fireObstacle.push({
                     eX: bgnWidth,
@@ -313,13 +313,20 @@ function createFire() {
         else {
             fireObstacle[i].eX -= 10
             // check if an enemy has reached a certain position
-            if (fireObstacle[i].eX == 500) {
+            if (fireObstacle[i].eX <= 550 && fireObstacle.length <= 1) {
             // add a new fireObstacle at a random y value
                 fireObstacle.push({
                     eX: bgnWidth,
                     eY: Math.floor(getRandomArbitrary(0.23, 1) * bgnHeight)
                 })
             }
+            else if (fireObstacle[i].eX == 550) {
+                // add a new fireObstacle at a random y value
+                    fireObstacle.push({
+                        eX: bgnWidth,
+                        eY: Math.floor(getRandomArbitrary(0.23, 1) * bgnHeight)
+                    })
+                }
         }
 
         if (fireObstacle[i].eX <= bgnX) {
@@ -347,10 +354,10 @@ function createRat() {
         if(score < 5 || timer < 5){
             ratObstacle[i].tX -= 20
             // check if an enemy has reached a certain position
-            if (ratObstacle.length < 2) {
+            if (ratObstacle.length <= 1 || ratObstacle[i].tX == 550) {
             // add a new fireObstacle at a random y value
             ratObstacle.push({
-                    tX: bgnWidth - 60,
+                    tX: bgnWidth,
                     tY: Math.floor(getRandomArbitrary(0.23, 1) * bgnHeight)
                 })
             }
@@ -358,17 +365,25 @@ function createRat() {
         else {
             ratObstacle[i].tX -= 10
             // check if an enemy has reached a certain position
-            if (ratObstacle[i].tX == 500) {
+            if (ratObstacle[i].tX <= 550 && ratObstacle.length <= 1) {
             // add a new fireObstacle at a random y value
-                ratObstacle.push({
-                    tX: bgnWidth - 60,
+            ratObstacle.push({
+                    tX: bgnWidth,
                     tY: Math.floor(getRandomArbitrary(0.23, 1) * bgnHeight)
                 })
             }
+            else if (ratObstacle[i].tX == 550) {
+                // add a new fireObstacle at a random y value
+                ratObstacle.push({
+                        tX: bgnWidth,
+                        tY: Math.floor(getRandomArbitrary(0.23, 1) * bgnHeight)
+                    })
+                }
         }
         
-        if (ratObstacle[i].tX <= bgnX) {
+        if (ratObstacle[i].tX <= 50) {
             ratObstacle.splice(i, 1)
+        
         }
 
         //check collisions
@@ -443,6 +458,10 @@ function setNewGame(){
     timer = 30
     playerX = bgnX;
     playerY = 650;
+    DownDirection = true;
+    UpDirection = false;
+    LeftDirection = false;
+    RightDirection = false;
 }
 
 //--------------------------------------------------//
@@ -491,7 +510,8 @@ function gameOver() {
 
 
 //SPLASH SCREEN
-function loadSplashScreen() {   
+function loadSplashScreen() {  
+    
     splashScreen = document.createElement('div')
     splashScreen.className = "splashScreen"
     splashScreen.innerHTML = `
@@ -525,6 +545,7 @@ function loadSplashScreen() {
             
             </div>
     `
+    
     body.appendChild(splashScreen)
 
     //music
@@ -565,13 +586,12 @@ function loadSplashScreen() {
 }
 
 function removeSplashScreen() {
+    
     splashScreen.remove()    
 }
 
 //GAME SCREEN
 function loadGameScreen() {
-    
-    
     gameScreen = document.createElement('div')
     gameScreen.className = "gameScreen"
     gameScreen.innerHTML = `
