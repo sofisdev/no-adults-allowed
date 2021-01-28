@@ -60,6 +60,11 @@ let isRightArrow = false;
 let isUpArrow = false;
 let isDownArrow = false;
 
+let LeftDirection = false;
+let RightDirection = false;
+let UpDirection = false;
+let DownDirection = false;
+
 //Music variables
 let backMusic = new Audio();
 backMusic.src = "audio/backMusic.ogg"
@@ -84,24 +89,44 @@ function callDOMevents() {
             isRightArrow = true;        
             isUpArrow = false;
             isDownArrow = false;
+
+            LeftDirection = false;
+            RightDirection = true;        
+            UpDirection = false;
+            DownDirection = false;
         } 
         else if(event.keyCode == 37 || event.key === 'ArrowLeft') {
             isLeftArrow = true;
             isRightArrow = false;
             isUpArrow = false;
             isDownArrow = false;
+
+            LeftDirection = true;
+            RightDirection = false;        
+            UpDirection = false;
+            DownDirection = false;
         }
         else if(event.keyCode == 38 || event.key === 'ArrowUp') {
             isLeftArrow = false;
             isRightArrow = false;
             isUpArrow = true;
             isDownArrow = false;
+
+            LeftDirection = false;
+            RightDirection = false;        
+            UpDirection = true;
+            DownDirection = false;
         }
         else if(event.keyCode == 39 || event.key === 'ArrowDown') {
             isLeftArrow = false;
             isRightArrow = false;
             isUpArrow = false;
             isDownArrow = true;
+
+            LeftDirection = false;
+            RightDirection = false;        
+            UpDirection = false;
+            DownDirection = true;
         }
     })
 
