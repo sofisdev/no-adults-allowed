@@ -59,7 +59,7 @@ let isDownArrow = false;
 
 //Music variables
 let backMusic = new Audio();
-backMusic.src = "audio/backMusic.mp3"
+backMusic.src = "audio/backMusic.ogg"
 
 let minusMusic = new Audio();
 minusMusic.src = "audio/minus.ogg"
