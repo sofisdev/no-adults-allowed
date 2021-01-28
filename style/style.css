@@ -30,16 +30,20 @@ h2 {
 
 /* ELEMENTS FROM SPLASHSCREEN */
 .splashScreen {
-    width: 70%;
-    margin: 200px auto;
+    width: 65%;
+    margin: 15px auto;
     border: 10px solid black;
-    padding: 60px 15px;
+    padding: 0px;
     background-color: white;
     display: flex;
     flex-direction: column;
     justify-content:space-between;
     align-items: center;
-    flex-wrap: wrap; 
+}
+
+.splashScreen h1 {
+    padding: 20px;
+    margin: 0px;
 }
 
 .characterChoice {
