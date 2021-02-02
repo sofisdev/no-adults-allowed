@@ -531,10 +531,9 @@ function loadSplashScreen() {
         <div class="instructions">
             <h2>-------  Instructions  -------</h2>
             <div>
-                <p>Easy! As any other kid, avoid dangerous incoming risks and eat as much pizza as possible before your parents come back home!<br>
+                Easy! As any other kid, avoid dangerous incoming risks and eat as much pizza as possible before your parents come back home!<br>
                 <br>Arrow Right - Move RIGHT <br>Arrow Left - Move LEFT<br>Arrow Up - Move UP<br>Arrow Down - Move DOWN
-                </p>
-                <img src="images/valor.png" alt="valor team symbol" width="200" height="200">
+                
             </div>
         </div>
         <div class="start">

@@ -14,10 +14,6 @@ class Pizza {
 
         this.canvas = canvas;
         this.ctx = this.canvas.getContext("2d");
-
-        this.xMove = 50;
-        this.yMove = 50;
-
     }
     draw() {
         this.ctx.drawImage(this.PizzaImg, this.x, this.y, this.width, this.height); 

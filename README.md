@@ -1,83 +1,108 @@
 # No Adults Allowed
 
-[Click here to see deployed game](http://github.com)
+[Click here to see deployed game](https://sofsanurb.github.io/no-adults-allowed/)
+
+![Gamescreen](images/finalGame.png)
+
+[![License: CC BY-NC-SA 4.0](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
+
+This work is licensed under a
+[Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License][https://creativecommons.org/licenses/by-nc-sa/4.0/].
+
+[![License: CC BY-NC-SA 4.0](https://licensebuttons.net/l/by-nc-sa/4.0/80x15.png)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
 
 ## Description
-"No Adults Allowed" is a game where the player is a kid who is alone in his house. The player has to move vertically and horizontally through the rooms, avoidind incoming obstacles/fireObstacle that appear randomly in the space. 
-The game ends either when the player's score reaches 0 or when the timer stops, showing the final score to the user. 
-The score will increase if the player eats food or finds weapons, and it will decrease every time the player hits an obstacle or an enemy.
+"No Adults Allowed" is a game where the player is a kid alone in his house. The player can move vertically and horizontally through the room, avoiding incoming obstacles that appear randomly in the space and move in one direction from right to left. 
+The game ends either when the player's score reaches 0 (Game lost) or when the timer stops (Game won), showing the final score to the user. 
+The score will increase if the player eats food, and it will decrease every time the player hits an obstacle or an enemy.
 
 
 ## MVP
-- fireObstacle or obstacles will randomly appear in the space
-- Touching an enemy or obstacle decreases the score
-- Food or weapons will randomly appear in the space
-- Eating food or getting weapons increases the score
-- Timer is set by the user before starting, choosing between 30 sec, 1 min or 3 min.
+- Obstacles randomly appear in the space and move in one direction.
+- Touching an enemy or obstacle decreases the score.
+- Food randomly appears in the space every 3 seconds.
+- Eating food increases the score.
+- Timer is set before starting (30 sec.).
+- The player can choose between 2 avatars (Kid 1 or Kid 2).
 
 
 ## Backlog
-- Add scorebar and counter of weapons
-- Add outer space
-- Add new enemy that randomly appears and moves throuh the scene vertically and horizontally
-- Add option to choose between 2 characters (Kid 1 or Kid 2)
+- Add music button (on/off)
+- Responsive web design for tablets and phones
+- Add new scenes.
+- Add multiplayer option in one scene.
 
 
 ## Data structure
-# main.js
+### index.js
 
-- buildSplashScreen () {}
-- buildGameScreen () {}
-- buildGameOverScreen () {}
-- addEventListener() {}
+- callDOMevents () {}
 
-# mainGame.js
-
-- Game () {}
-- starLoop () {}
-- checkCollisions () {}
-- addObstacle () {}
-- addHelpElements () {}
-- clearCanvas () {}
-- updateCanvas () {}
-- drawCanvas () {}
-- GameOver () {}
-
-# player.js 
-
-- setCoordinates () {
-    this.x;
-    this.y;
-    this.direction;
-    this.size
-}
+- playMusic () {}
+- setCanvas () {}
+- drawCanvas() {}
+- drawLimits () {}
+- drawFloor () {}
+- drawBackWall () {}
+- drawWall () {}
 - draw () {}
-- move () {}
-- checkScreenCollision () {}
 
-# obstacle.js 
+- getRandomArbitrary () {}
+- createFire () {}
+- createRat () {}
+- createPizza () {}
 
-- setCoordinates () {
-    this.x;
-    this.y;
-    this.direction;
-    this.size
-}
+- game () {}
+- updateTimer () {}
+- setNewGame () {}
+- DomElement () {}
+- gameStart () {}
+- loadSplashScreen () {} 
+- removeSplashScreen () {} 
+- loadGameScreen () {} 
+- removeGameScreen () {} 
+- loadGameOverScreen () {}
+- removeGameOverScreen () {}
+- gameOver () {}
+
+
+### player.js 
+
+- this.x;
+- this.y;
+- this.direction;
+- this.playerImg;
+- this.width;
+- this.height;
+- this.canvas;
+- this.ctx;
+- this.xMove;
+- this.yMove;
 - draw () {}
-- move () {}
 
-# helpElements.js 
+### obstacle.js 
 
-- setCoordinates () {
-    this.x;
-    this.y;
-    this.direction;
-    this.size
-}
+- this.x;
+- this.y;
+- this.direction;
+- this.playerImg;
+- this.width;
+- this.height;
+- this.canvas;
+- this.ctx;
 - draw () {}
-- move () {}
 
+### helpElements.js 
 
+- this.x;
+- this.y;
+- this.direction;
+- this.playerImg;
+- this.width;
+- this.height;
+- this.canvas;
+- this.ctx;
+- draw () {}
 
 ## States y States Transitions
 Definition of the different states and their transition (transition functions)
@@ -87,43 +112,10 @@ Definition of the different states and their transition (transition functions)
 - gameOverScreen
 
 
-## Task
-
-- main: buildSplashScreen
-- main: buildGameScreen
-- main: buildGameOverScreen
-- main: addEventListener
-
-- mainGame: Game
-- mainGame: starLoop
-- mainGame: checkCollisions
-- mainGame: addObstacle
-- mainGame: addHelpElements
-- mainGame: clearCanvas
-- mainGame: updateCanvas
-- mainGame: drawCanvas
-- mainGame: GameOver
-
-- player: setCoordinates
-- player: draw
-- player: move
-- player: checkScreenCollision
-
-- obstacle: setCoordinates
-- obstacle: draw
-- obstacle: move
-
-- heplElements: setCoordinates
-- heplElements: draw
-- heplElements: move
-
 ## Links
 
-### Trello
-- [Trello Link](https://trello.com)
-
 ### Slides
-- [Slides Link](http://slides.com)
+- [Slides Link](https://docs.google.com/presentation/d/1t6d6EYKvuuCyHxVKGqrkmNmpAaASrb2E0O4o9vVD02M/edit?usp=sharing)
 
 ### Git
 - [Github repository Link](https://github.com/SofSanUrb/no-adults-allowed)
