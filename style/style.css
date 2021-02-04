@@ -7,14 +7,13 @@ html {
   }
 
 body {
-    margin: 0;
-    padding: 0;
+    margin: 0px;
+    padding: 0px 0px;
     background-image: url("../images/mainBackground.png");
     background-size: cover;
     font-family: 'Allerta Stencil';
     font-size: 14px;
 }
-
 
 
 h1 {
@@ -30,8 +29,8 @@ h2 {
 
 /* ELEMENTS FROM SPLASHSCREEN */
 .splashScreen {
-    width: 600px;
-    margin: 15px auto;
+    margin: 10px auto;
+    width: 450px;
     border: 10px solid black;
     padding: 0px;
     background-color: white;
@@ -62,6 +61,10 @@ h2 {
 .instructions div {
     padding-top: 0px;
     margin: 0px;
+    display:flex;
+    width: 350px;
+    justify-content:space-between;
+    align-content: center;
 }
 
 .instructions h2 {
@@ -113,6 +116,43 @@ h2 {
 #player2 {
     background: url("../images/boyFront.png"),#ABF5E9;
    
+}
+
+@media (max-width: 600px) and (orientation: portrait){
+
+    body {
+        height:100%;
+    }
+
+    .splashScreen {
+        margin: 0px auto;
+        width: 90%;
+        height:100%;
+        border: 5px solid black;
+    }
+
+    .instructions div{
+        width: 300px;
+    }
+
+    .instructions h2 {
+        margin-top: 5px;
+    }
+
+    .start {
+        margin: 10px auto;
+    }
+
+    #startBtn {
+        border: 5px solid black;
+        padding: 12px;
+        font-size: 2.5em;
+        font-family: 'Allerta Stencil';
+    }
+    
+    #copyright, #copyright p {
+        margin-top: 0px;
+    }
 }
 
 /* ELEMENTS FROM GAMESCREEN */
@@ -210,12 +250,7 @@ h2 {
     text-align: center;
 }
 
-.instructions div {
-    display:flex;
-    width: 450px;
-    justify-content:space-between;
-    align-content: center;
-}
+
 
 
 

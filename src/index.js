@@ -236,7 +236,7 @@ function draw() {
         gameOver()
     }
     else {
-        if (backMusic.currentTime < 0){
+        if (backMusic.currentTime == 0){
             playMusic(backMusic)
         }
         //Methods to draw the inside house basics
@@ -529,7 +529,7 @@ function loadSplashScreen() {
             </div>
         </div>
         <div class="instructions">
-            <h2>-------  Instructions  -------</h2>
+            <h2>Instructions</h2>
             <div>
                 Easy! As any other kid, avoid dangerous incoming risks and eat as much pizza as possible before your parents come back home!<br>
                 <br>Arrow Right - Move RIGHT <br>Arrow Left - Move LEFT<br>Arrow Up - Move UP<br>Arrow Down - Move DOWN
@@ -547,13 +547,9 @@ function loadSplashScreen() {
     
     body.appendChild(splashScreen)
 
-    //music
-    playMusic(backMusic)
-
-
     let startBtn = document.querySelector('#startBtn')
     let playerName = document.querySelector('#playerName')
-    let chooseNameLabel = document.querySelector(".chooseName label")
+    // let chooseNameLabel = document.querySelector(".chooseName label")
     let playerBtnLeft = document.querySelector('#player1')
     let playerBtnRight = document.querySelector('#player2')
     let chooseTitle = document.querySelectorAll('.characterChoice h2')
@@ -574,7 +570,9 @@ function loadSplashScreen() {
         if(playerName.value != "" && (playerLeftSelected || playerRightSelected)) {
             userName = playerName.value;
             playMusic(selectMusic)
+            playMusic(backMusic)
             gameStart()
+            
         }
         else {
             // chooseNameLabel.style.color =  "red"
