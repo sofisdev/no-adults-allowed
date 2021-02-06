@@ -4,6 +4,7 @@
 html {
     height: 100%;
     padding: 0;
+    display:block;
   }
 
 body {
@@ -121,18 +122,28 @@ h2 {
 @media (max-width: 600px) and (orientation: portrait){
 
     body {
-        height:100%;
+        width: auto;
+        height:auto;
+    }
+    .splashScreen {
+        margin: 10px;
+        width: auto;
+        height:auto;
+        border: 5px solid black;        
     }
 
-    .splashScreen {
-        margin: 0px auto;
-        width: 90%;
-        height:100%;
-        border: 5px solid black;
+    .instructions {
+        display:flex;
+        flex-direction: column;
+        align-items:center;  
     }
 
     .instructions div{
-        width: 300px;
+        
+        width:200%;
+        display:flex;
+        flex-direction: column;
+        /* justify-content:space-between; */
     }
 
     .instructions h2 {
