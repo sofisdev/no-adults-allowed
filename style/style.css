@@ -9,11 +9,14 @@ html {
 
 body {
     margin: 0px;
-    padding: 0px 0px;
+    padding: 0px;
     background-image: url("../images/mainBackground.png");
     background-size: cover;
     font-family: 'Allerta Stencil';
     font-size: 14px;
+    display: flex;  
+    justify-content: center;
+    align-items: center;
 }
 
 
@@ -124,12 +127,15 @@ h2 {
     body {
         width: auto;
         height:auto;
+        position: absolute;
     }
     .splashScreen {
-        margin: 10px;
-        width: auto;
+        width: 90%;
+        margin: auto;
         height:auto;
-        border: 5px solid black;        
+        border: 5px solid black;    
+        justify-content: center;
+        
     }
 
     .instructions {
