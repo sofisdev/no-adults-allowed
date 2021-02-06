@@ -3,7 +3,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Allerta+Stencil&display=swap');
 html {
     height: 100%;
-    padding: 0;
     display:block;
   }
 
@@ -122,59 +121,8 @@ h2 {
    
 }
 
-@media (max-width: 600px) and (orientation: portrait){
-
-    body {
-        width: auto;
-        height:auto;
-        position: absolute;
-    }
-    .splashScreen {
-        width: 90%;
-        margin: auto;
-        height:auto;
-        border: 5px solid black;    
-        justify-content: center;
-        
-    }
-
-    .instructions {
-        display:flex;
-        flex-direction: column;
-        align-items:center;  
-    }
-
-    .instructions div{
-        
-        width:200%;
-        display:flex;
-        flex-direction: column;
-        /* justify-content:space-between; */
-    }
-
-    .instructions h2 {
-        margin-top: 5px;
-    }
-
-    .start {
-        margin: 10px auto;
-    }
-
-    #startBtn {
-        border: 5px solid black;
-        padding: 12px;
-        font-size: 2.5em;
-        font-family: 'Allerta Stencil';
-    }
-    
-    #copyright, #copyright p {
-        margin-top: 0px;
-    }
-}
-
 /* ELEMENTS FROM GAMESCREEN */
 .sceneCanvas {
-    
     margin: 20px auto;
     display: flex;
     flex-direction: column;
@@ -200,7 +148,7 @@ h2 {
 /* ELEMENTS FROM GAMEOVERSCREEN */
 .gameOverScreen {
     width: 70%;
-    margin: 200px auto;
+    margin: 30px auto;
     padding: 60px 15px;
     background-color: white;
     border: 10px solid black;
@@ -261,15 +209,120 @@ h2 {
 }
 
 .gameScreen #copyright {
-    padding-top: 40px;
+    padding-top: 20px;
     padding-bottom: 20px;
-    color:white;
+    color:grey;
     text-align: center;
 }
 
+@media (max-width: 600px) and (orientation: portrait){
+    body, html { overflow-x:hidden; }
+    body {
+        width: auto;
+        height:auto;
+        
+    }
+    .splashScreen {
+        width: 90%;
+        margin: auto;
+        height:auto;
+        border: 5px solid black;    
+        justify-content: center;
+        
+    }
 
+    .instructions {
+        display:flex;
+        flex-direction: column;
+        align-items:center;  
+    }
 
+    .instructions div{
+        
+        width:200%;
+        display:flex;
+        flex-direction: column;
+        /* justify-content:space-between; */
+    }
 
+    .instructions h2 {
+        margin-top: 5px;
+    }
+
+    .start {
+        margin: 10px auto;
+    }
+
+    #startBtn {
+        border: 5px solid black;
+        padding: 12px;
+        font-size: 2.5em;
+        font-family: 'Allerta Stencil';
+    }
+    
+    #copyright, #copyright p {
+        margin-top: 0px;
+    }
+
+    .gameScreen {
+        width: 100%;
+        margin: 0;
+        padding:0;        
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .sceneCanvas {
+        transform: scale(0.45);
+        transform-origin:0 0;
+        padding:0px;
+        margin-bottom: -450px;
+        justify-content: center;
+    }
+    
+
+    .gameScreen #copyright {
+        padding-top: 0px;
+        color:grey;
+    }
+
+    .gameOverScreen{
+        width: 80%;
+        padding: 20px 15px;
+        margin: 15px auto;
+        border: 5px solid black;    
+        justify-content: center;
+    }
+
+    #scoreBar {
+        width: 75%;
+        flex-wrap: wrap;
+        justify-content: center
+    }
+
+    #scoreBar h2 {
+        margin-right: 10px;
+    }
+
+    #reStartBtn {
+        padding: 5px 1px;
+    }
+
+    .gameScreen #copyright {
+        margin-top: 25px;
+    }
+
+    .gameTitle {
+        margin-top: 10px;
+    }
+
+    #finalScore {
+        border:none;
+        color:white;
+        background-color: black;
+    }
+}
 
 
 

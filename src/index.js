@@ -13,6 +13,8 @@
 //light green = "#ABF5E9"
 //light light green "#D1F3EB"
 
+let win = window
+
 let playerLeftSelected = false;
 let playerRightSelected = false;
 let userName = "";
@@ -26,7 +28,11 @@ let frameNo = 0;
 let isTimeForPizza = false;
 let timer = 30;
 let canvas = null;
+let canvasHeight = 800;
+let canvasWidth = 800;
 let ctx = null;
+
+
 let offset = 50;
 let gameIsOver = false;
 let finishGame = null;
@@ -35,13 +41,14 @@ let finalScore = 0;
 //Background house - outer limits to drwawing
 let bgnX = offset;
 let bgnY = offset;
-let bgnWidth = 700;
-let bgnHeight = 700;
-let wallXN = bgnX + 500;
+let bgnWidth = canvasWidth - (offset*2);
+let bgnHeight = canvasHeight - (offset*2);
+let wallXN = bgnWidth - 100;
 
 //player properties
 let playerX = bgnX;
-let playerY = 650;
+let playerHeight = 100;
+let playerY = canvasHeight - playerHeight - offset;
 
 //Obstacles
 let eX = null;
@@ -51,8 +58,8 @@ let ratObstacle = [{tX:bgnWidth , tY: 300}]
 let pizzaHelp = [{pX:bgnWidth / 2 , pY: 450}]
 
 //Wall properties
-let wallHeight = 75;
-let wallBottom = bgnY + wallHeight
+let wallHeight = offset* 3 / 2;
+let wallBottom = offset + wallHeight
 
 //KeyHandler properties
 let isLeftArrow = false;
@@ -146,22 +153,29 @@ function playMusic(music) {
 function setCanvas() {
     //create canvas
     canvas = document.querySelector("canvas");
-    ctx = canvas.getContext("2d");
-    
+    ctx = canvas.getContext("2d");  
 }
 
 function drawCanvas() {
-    //create canvas 
+   //create canvas 
     canvas.style.backgroundColor="white"
-    canvas.setAttribute("width", '800');
-    canvas.setAttribute("height", '800') 
-       
+    canvas.setAttribute("width", canvasWidth);
+    canvas.setAttribute("height", canvasHeight) 
+    
+    // if (window.screen.width < 800) {
+    //     ctx.font = '15px Allerta Stencil'
+    // }
+    // else {
+    //     ctx.font = '30px Allerta Stencil'
+    // }
+    ctx.font = '30px Allerta Stencil'
 }
 
 function drawLimits() {
+    
     ctx.beginPath()
     ctx.fillStyle = "#FAAA8C"
-    ctx.fillRect(bgnX,bgnY,bgnWidth,bgnHeight)
+    ctx.fillRect(offset,offset,bgnWidth,bgnHeight)
     ctx.closePath()
     
 }
@@ -170,16 +184,16 @@ function drawFloor() {
     ctx.strokeStyle = '#FFE5DB';
 
     //vertical lines
-    for (let i = bgnX + 50; i<canvas.width - 50; i+=50) {
+    for (let i = offset; i<canvas.width - offset; i+=offset) {
         ctx.moveTo(i, wallBottom);
         ctx.lineTo(i, bgnHeight + offset);
         
         ctx.stroke();
     }
     //horizontal lines
-    for (let j = wallBottom + 25; j<canvas.height - 50; j+=25) {
-        ctx.moveTo(bgnX, j);
-        ctx.lineTo(bgnX + bgnWidth, j);
+    for (let j = wallBottom + (offset / 2); j<canvas.height - offset; j+=(offset / 2)) {
+        ctx.moveTo(offset, j);
+        ctx.lineTo(bgnWidth + offset, j);
         ctx.stroke();
     }
 }
@@ -188,19 +202,19 @@ function drawBackWall() {
     //Main wall
     ctx.beginPath()
     ctx.fillStyle = "#D1F3EB"
-    ctx.fillRect(bgnX,bgnY,bgnWidth,wallBottom)
+    ctx.fillRect(offset,offset,bgnWidth,wallBottom)
     ctx.stroke()
     ctx.closePath()
 
     //wall stripe
     ctx.beginPath()
     ctx.fillStyle = "#855746"
-    ctx.fillRect(bgnX,wallBottom, bgnWidth,10)
+    ctx.fillRect(offset,wallBottom, bgnWidth, offset / 5)
     ctx.stroke()
     ctx.closePath()
     ctx.beginPath()
     ctx.fillStyle = "#855746"
-    ctx.fillRect(bgnX,wallBottom + 25, bgnWidth,10)
+    ctx.fillRect(offset,wallBottom + offset / 2, bgnWidth, offset / 5)
     ctx.stroke()
     ctx.closePath()
 }
@@ -209,18 +223,17 @@ function drawWall() {
     //Wall north horizontal cut
     ctx.beginPath()
     ctx.fillStyle = "white"
-    ctx.fillRect(wallXN,bgnY,20,400)
+    ctx.fillRect(wallXN,offset,20,400)
     ctx.closePath()
 
     //Wall north vertical side
     ctx.beginPath()
     ctx.fillStyle = "#855746"
-    ctx.fillRect(wallXN,bgnY + 400,20,wallHeight)
+    ctx.fillRect(wallXN,offset + 400,20,wallHeight)
     ctx.closePath()
 }
 
 function draw() {
-
     if(score <= 0 || timer <= 0) {
         gameIsOver = true
     }
@@ -239,13 +252,53 @@ function draw() {
         if (backMusic.currentTime == 0){
             playMusic(backMusic)
         }
+        
+        let w = screen.width;
+        // if( window.screen.width < 800) {
+        //     offset = 20;
+        //     canvasHeight = w;
+        //     canvasWidth = w;
+
+        //     //update basic variables
+        //     bgnWidth = canvasWidth - (offset*2);
+        //     bgnHeight = canvasHeight - (offset*2);
+        //     wallHeight = offset* 3 / 2;
+        //     wallBottom = offset + wallHeight;
+        //     wallXN = bgnWidth - 100
+        //     bgnX = offset;
+        //     bgnY = offset; 
+        //     // playerX = bgnX
+        //     // playerHeight = 50;
+        //     // playerY = canvasHeight - playerHeight - offset;
+        // }
+        
         //Methods to draw the inside house basics
         ctx.clearRect(0, 0, canvas.width, canvas.height)
         drawCanvas()
         drawLimits()
         drawFloor()
         drawBackWall()
-        //drawWall()
+
+        
+
+        //Write score
+        if(score < 5 || timer < 5){
+            ctx.fillStyle = "red";
+            backMusic.volume = 0.5
+            backMusic.playbackRate = 1.5
+        }
+
+        ctx.fillText('Life pts: ' + score + '    |    Home Alone time: ' + timer + ' seconds', offset, offset*2/3)
+
+        //create player from Player class
+        player = new Player(canvas, playerX, playerY)
+
+        // if( window.screen.width < 800) { 
+        //     player.width = 100;
+        //     player.height = 150;
+        // }
+
+        player.draw()
 
         //Obstacles
         createFire()
@@ -255,23 +308,8 @@ function draw() {
             createPizza()
         }
 
-        //Write score
-        if(score < 5 || timer < 5){
-            ctx.fillStyle = "red";
-            backMusic.volume = 0.5
-            backMusic.playbackRate = 1.5
-        }
-
-        ctx.font = '30px Allerta Stencil'
-        ctx.fillText('Life pts: ' + score, bgnX, 30)
-        ctx.fillText('Home Alone time: ' + timer + ' seconds', bgnX + 200, 30)
-
-        //create player from Player class
-        player = new Player(canvas, playerX, playerY)
-        player.draw()
-
         // update position of player depending on arrows
-        if(isLeftArrow && (playerX > bgnX || (playerX > 570 && playerY < 450) )) {
+        if(isLeftArrow && playerX > offset) {
             playerX -= player.xMove
         }
         else if (isRightArrow && playerX + player.width < canvas.width - offset) {
