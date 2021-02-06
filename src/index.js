@@ -68,7 +68,7 @@ let DownDirection = false;
 //Music variables
 let backMusic = new Audio();
 backMusic.src = "audio/backMusic.ogg"
-backMusic.autoplay = true;
+
 
 let minusMusic = new Audio();
 minusMusic.src = "audio/minus.ogg"
@@ -497,7 +497,8 @@ function gameStart() {
     
     if (!gameIsOver) {
         // function to starts the game from the class
-    game();
+        playMusic(backMusic)
+        game();
     }
 }
 
@@ -570,7 +571,6 @@ function loadSplashScreen() {
         if(playerName.value != "" && (playerLeftSelected || playerRightSelected)) {
             userName = playerName.value;
             playMusic(selectMusic)
-            playMusic(backMusic)
             gameStart()
             
         }
@@ -647,7 +647,6 @@ function loadGameOverScreen() {
         playMusic(selectMusic)
 
         //Restart game and music
-        playMusic(backMusic)
         gameStart()
     })
     
