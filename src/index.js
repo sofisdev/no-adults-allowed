@@ -255,7 +255,6 @@ function draw() {
         drawFloor()
         drawBackWall()
 
-
         //Write score
         if(score < 5 || timer < 5){
             ctx.fillStyle = "red";
@@ -609,10 +608,8 @@ function loadSplashScreen() {
         <div class="start">
             <button id="startBtn" class ="button">START!</button>
         </div>
-        <div id="copyright">
-            <p>©2021 Sofía Sánchez Urbano</p>
-            
-            </div>
+        <a href="https://www.linkedin.com/in/sof%C3%ADa-s%C3%A1nchez-urbano-76953b64/" id="copyright">©2021 created by Sofía Sánchez Urbano</a>
+
     `
     
     body.appendChild(splashScreen)
@@ -673,7 +670,7 @@ function loadGameScreen() {
         </div>
         <button class="btn" id="btn-down">▼</button>
     </div>
-    <div id="copyright">©2021 Sofía Sánchez Urbano</div>
+    <a href="https://www.linkedin.com/in/sof%C3%ADa-s%C3%A1nchez-urbano-76953b64/" id="copyright">©2021 created by Sofía Sánchez Urbano</a>
 `
     
 
@@ -698,8 +695,8 @@ function loadGameOverScreen() {
             <h2 id="finalScore">test</h2>
             <button id="reStartBtn" class ="button">Play again!</button>
         </div>
-        <div id="copyright">©2021 Sofía Sánchez Urbano</div>
-    `
+        <a href="https://www.linkedin.com/in/sof%C3%ADa-s%C3%A1nchez-urbano-76953b64/" id="copyright">©2021 created by Sofía Sánchez Urbano</a>
+        `
     body.appendChild(gameOverScreen)
 
     let gameOverMessage = document.querySelector('.gameOver h1')

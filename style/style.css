@@ -206,6 +206,7 @@ h2 {
     margin-top: 10px;
     padding: 0px;
     color:grey;
+    text-decoration: none;
 }
 
 .gameScreen #copyright {
@@ -232,21 +233,19 @@ h2 {
         height:auto;
         border: 5px solid black;    
         justify-content: center;
-        
     }
 
     .instructions {
         display:flex;
         flex-direction: column;
         align-items:center;  
+        margin-bottom: 0px;
     }
 
     .instructions div{
-        
         width:200%;
         display:flex;
         flex-direction: column;
-        /* justify-content:space-between; */
     }
 
     .instructions h2 {
@@ -320,15 +319,11 @@ h2 {
 
     #btn-right, #btn-left {
         padding-top:4px;
-        padding-bottom:5px;
+        padding-bottom:4px;
     }
 
     #btn-up, #btn-down {
         padding: 2px 30px;
-    }
-
-    #btn-up, #btn-right, #btn-left {
-        margin-bottom: 3px;
     }
 
     #btn-up {
