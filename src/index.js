@@ -161,13 +161,6 @@ function drawCanvas() {
     canvas.style.backgroundColor="white"
     canvas.setAttribute("width", canvasWidth);
     canvas.setAttribute("height", canvasHeight) 
-    
-    // if (window.screen.width < 800) {
-    //     ctx.font = '15px Allerta Stencil'
-    // }
-    // else {
-    //     ctx.font = '30px Allerta Stencil'
-    // }
     ctx.font = '30px Allerta Stencil'
 }
 
@@ -254,23 +247,6 @@ function draw() {
         }
         
         let w = screen.width;
-        // if( window.screen.width < 800) {
-        //     offset = 20;
-        //     canvasHeight = w;
-        //     canvasWidth = w;
-
-        //     //update basic variables
-        //     bgnWidth = canvasWidth - (offset*2);
-        //     bgnHeight = canvasHeight - (offset*2);
-        //     wallHeight = offset* 3 / 2;
-        //     wallBottom = offset + wallHeight;
-        //     wallXN = bgnWidth - 100
-        //     bgnX = offset;
-        //     bgnY = offset; 
-        //     // playerX = bgnX
-        //     // playerHeight = 50;
-        //     // playerY = canvasHeight - playerHeight - offset;
-        // }
         
         //Methods to draw the inside house basics
         ctx.clearRect(0, 0, canvas.width, canvas.height)
@@ -279,7 +255,6 @@ function draw() {
         drawFloor()
         drawBackWall()
 
-        
 
         //Write score
         if(score < 5 || timer < 5){
@@ -293,11 +268,6 @@ function draw() {
         //create player from Player class
         player = new Player(canvas, playerX, playerY)
 
-        // if( window.screen.width < 800) { 
-        //     player.width = 100;
-        //     player.height = 150;
-        // }
-
         player.draw()
 
         //Obstacles
@@ -307,6 +277,67 @@ function draw() {
         if (isTimeForPizza) {
             createPizza()
         }
+
+        //DOM events in case of responsive gameScreen
+        let btnLeft = document.querySelector('#btn-left')
+        let btnRight = document.querySelector('#btn-right')
+        let btnUp = document.querySelector('#btn-up')
+        let btnDown = document.querySelector('#btn-down')
+
+        btnDown.addEventListener('touchstart', () => {
+            isLeftArrow = false;
+            isRightArrow = false;
+            isUpArrow = false;
+            isDownArrow = true;
+    
+            LeftDirection = false;
+            RightDirection = false;        
+            UpDirection = false;
+            DownDirection = true;
+        })
+    
+        btnUp.addEventListener('touchstart', () => {
+            isLeftArrow = false;
+            isRightArrow = false;
+            isUpArrow = true;
+            isDownArrow = false;
+    
+            LeftDirection = false;
+            RightDirection = false;        
+            UpDirection = true;
+            DownDirection = false;
+        })
+    
+        btnLeft.addEventListener('touchstart', () => {
+            isLeftArrow = true;
+            isRightArrow = false;
+            isUpArrow = false;
+            isDownArrow = false;
+    
+            LeftDirection = true;
+            RightDirection = false;        
+            UpDirection = false;
+            DownDirection = false;
+        })
+    
+        btnRight.addEventListener('touchstart', () => {
+            isLeftArrow = false;
+            isRightArrow = true;
+            isUpArrow = false;
+            isDownArrow = false;
+    
+            LeftDirection = false;
+            RightDirection = true;        
+            UpDirection = false;
+            DownDirection = false;
+        })
+
+        document.addEventListener("touchend", (event) => {
+            isRightArrow = false;
+            isLeftArrow = false;
+            isUpArrow = false;
+            isDownArrow = false;
+        })
 
         // update position of player depending on arrows
         if(isLeftArrow && playerX > offset) {
@@ -634,8 +665,18 @@ function loadGameScreen() {
     <div class="sceneCanvas">
         <canvas></canvas>
     </div>
+    <div id="responsive">
+        <button class="btn" id="btn-up">▲</button>
+        <div>
+            <button class="btn" id="btn-left">◄</button>
+            <button class="btn" id="btn-right">►</button>
+        </div>
+        <button class="btn" id="btn-down">▼</button>
+    </div>
     <div id="copyright">©2021 Sofía Sánchez Urbano</div>
 `
+    
+
     body.appendChild(gameScreen)         
 }
 

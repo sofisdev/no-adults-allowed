@@ -215,6 +215,10 @@ h2 {
     text-align: center;
 }
 
+#responsive {
+    display:none
+}
+
 @media (max-width: 600px) and (orientation: portrait){
     body, html { overflow-x:hidden; }
     body {
@@ -277,10 +281,63 @@ h2 {
         transform: scale(0.45);
         transform-origin:0 0;
         padding:0px;
+        margin-top: 0px;
         margin-bottom: -450px;
-        justify-content: center;
+        justify-items: center;
+        align-items: center;
     }
     
+    #responsive {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-top: 15px;
+        margin-bottom: -15px;        
+    }
+
+    #responsive .btn{
+        border: 3px solid white;
+        font-weight: 700;
+        background-color: #FAAA8C;
+        font-size: 1.2em;
+    }
+
+    #responsive div {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        width: 500px;
+    }
+
+    #btn-right {
+        padding-left: 30px;
+    }
+
+    #btn-left {
+        padding-right: 30px;
+    }
+
+    #btn-right, #btn-left {
+        padding-top:4px;
+        padding-bottom:5px;
+    }
+
+    #btn-up, #btn-down {
+        padding: 2px 30px;
+    }
+
+    #btn-up, #btn-right, #btn-left {
+        margin-bottom: 3px;
+    }
+
+    #btn-up {
+        padding-bottom: 5px;
+    }
+
+    #btn-down {
+        padding-top: 5px;
+    }
 
     .gameScreen #copyright {
         padding-top: 0px;
@@ -315,7 +372,10 @@ h2 {
 
     .gameTitle {
         margin-top: 10px;
+        margin-bottom: 5px;
     }
+
+
 
     #finalScore {
         border:none;
