@@ -2,7 +2,7 @@
 
 [Click here to see deployed game](https://sofsanurb.github.io/no-adults-allowed/)
 
-![Gamescreen](images/finalGame.png)
+![](images/finalGame.png)
 
 [![License: CC BY-NC-SA 4.0](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
 
@@ -12,7 +12,7 @@ This work is licensed under a
 [![License: CC BY-NC-SA 4.0](https://licensebuttons.net/l/by-nc-sa/4.0/80x15.png)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
 
 ## Description
-"No Adults Allowed" is a game where the player is a kid alone in his house. The player can move vertically and horizontally through the room, avoiding incoming obstacles that appear randomly in the space and move in one direction from right to left. 
+"No Adults Allowed" is a game where the player is a kid alone at house. The player can move vertically and horizontally through the room, avoiding incoming obstacles that appear moving in one direction. 
 The game ends either when the player's score reaches 0 (Game lost) or when the timer stops (Game won), showing the final score to the user. 
 The score will increase if the player eats food, and it will decrease every time the player hits an obstacle or an enemy.
 
@@ -27,10 +27,9 @@ The score will increase if the player eats food, and it will decrease every time
 
 
 ## Backlog
-- Add music button (on/off)
-- Responsive web design for tablets and phones
-- Add new scenes.
-- Add multiplayer option in one scene.
+- [x] Add music button (on/off)
+- [x] Responsive web design for tablets and phones
+- [0] Add multiplayer option in one scene.
 
 
 ## Data structure
@@ -115,8 +114,12 @@ Definition of the different states and their transition (transition functions)
 ## Links
 
 ### Slides
-- [Slides Link](https://docs.google.com/presentation/d/1t6d6EYKvuuCyHxVKGqrkmNmpAaASrb2E0O4o9vVD02M/edit?usp=sharing)
+- [Presentation slides](https://docs.google.com/presentation/d/1t6d6EYKvuuCyHxVKGqrkmNmpAaASrb2E0O4o9vVD02M/edit?usp=sharing)
 
 ### Git
-- [Github repository Link](https://github.com/SofSanUrb/no-adults-allowed)
-- [Deployment Link](https://sofsanurb.github.io/no-adults-allowed/)
+- [Repository Link](https://github.com/SofSanUrb/no-adults-allowed)
+- [Let's play!](https://sofsanurb.github.io/no-adults-allowed/)
+
+## Contact Info
+- [Github](https://github.com/SofSanUrb)
+- [LinkedIn](https://www.linkedin.com/in/sof%C3%ADa-s%C3%A1nchez-urbano-76953b64/)
