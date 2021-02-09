@@ -2,7 +2,7 @@
 
 [Click here to see deployed game](https://sofsanurb.github.io/no-adults-allowed/)
 
-![](images/finalGame.png)
+![](https://github.com/SofSanUrb/no-adults-allowed/blob/master/images/gamescreen.PNG)
 
 [![License: CC BY-NC-SA 4.0](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
 
