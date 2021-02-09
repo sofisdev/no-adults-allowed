@@ -202,11 +202,17 @@ h2 {
     box-shadow: 5px 10px black;
 }
 
-#copyright {
+.splashScreen #copyright, .gameOverScreen #copyright {
     margin-top: 10px;
     padding: 0px;
     color:grey;
     text-decoration: none;
+    display: flex;
+    align-items: center;
+}
+
+.splashScreen #copyright p, .gameOverScreen #copyright p {
+    margin-right: 4px;
 }
 
 .gameScreen #copyright {
@@ -263,8 +269,14 @@ h2 {
         font-family: 'Allerta Stencil';
     }
     
-    #copyright, #copyright p {
+    #copyright {
         margin-top: 0px;
+    }
+
+    .gameScreen #copyright {
+        margin-top: 25px;
+        padding-top: 0px;
+        color:grey;
     }
 
     .gameScreen {
@@ -277,13 +289,16 @@ h2 {
     }
 
     .sceneCanvas {
-        transform: scale(0.45);
+        /* --prop: Math.min(availabl); */
+        transform: scale(0.42);
         transform-origin:0 0;
-        padding:0px;
         margin-top: 0px;
         margin-bottom: -450px;
+        display: flex;
         justify-items: center;
         align-items: center;
+        margin-left: auto;
+        margin-right: 10px;
     }
     
     #responsive {
@@ -334,11 +349,6 @@ h2 {
         padding-top: 5px;
     }
 
-    .gameScreen #copyright {
-        padding-top: 0px;
-        color:grey;
-    }
-
     .gameOverScreen{
         width: 80%;
         padding: 20px 15px;
@@ -361,16 +371,10 @@ h2 {
         padding: 5px 1px;
     }
 
-    .gameScreen #copyright {
-        margin-top: 25px;
-    }
-
     .gameTitle {
         margin-top: 10px;
         margin-bottom: 5px;
     }
-
-
 
     #finalScore {
         border:none;
@@ -378,6 +382,51 @@ h2 {
         background-color: black;
     }
 }
+
+@media (max-width: 415px) and (orientation: portrait){
+    .sceneCanvas {
+        transform: scale(0.52);
+        transform-origin:0 0;
+        margin-bottom: -380px;
+    }
+    #responsive {
+        margin-bottom: -10px;
+    }
+}
+
+@media (max-width: 376px) and (orientation: portrait){
+    .sceneCanvas {
+        transform: scale(0.47);
+        transform-origin:0 0;
+        margin-bottom: -430px;
+    }
+}
+
+@media (max-width: 361px) and (orientation: portrait){
+    .sceneCanvas {
+        transform: scale(0.45);
+        transform-origin:0 0;
+        margin-bottom: -450px;
+    }
+}
+
+@media (max-width: 320px) and (orientation: portrait){
+    .sceneCanvas {
+        transform: scale(0.4);
+        transform-origin:0 0;
+        margin-bottom: -500px;
+    }
+
+    #copyright {
+        font-size: 0.9em;
+    }
+
+    #responsive {
+        margin-bottom: -22px;
+    }
+}
+
+
 
 
 

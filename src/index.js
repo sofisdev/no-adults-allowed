@@ -608,8 +608,10 @@ function loadSplashScreen() {
         <div class="start">
             <button id="startBtn" class ="button">START!</button>
         </div>
-        <a href="https://www.linkedin.com/in/sof%C3%ADa-s%C3%A1nchez-urbano-76953b64/" id="copyright">©2021 created by Sofía Sánchez Urbano</a>
-
+        <div id="copyright">
+            <p>©2021 created by</p>
+            <a href="https://www.linkedin.com/in/sof%C3%ADa-s%C3%A1nchez-urbano-76953b64/">Sofía Sánchez Urbano</a>
+        </div>
     `
     
     body.appendChild(splashScreen)
@@ -670,7 +672,7 @@ function loadGameScreen() {
         </div>
         <button class="btn" id="btn-down">▼</button>
     </div>
-    <a href="https://www.linkedin.com/in/sof%C3%ADa-s%C3%A1nchez-urbano-76953b64/" id="copyright">©2021 created by Sofía Sánchez Urbano</a>
+    <p id="copyright">©2021 created by Sofía Sánchez Urbano</p>
 `
     
 
@@ -695,7 +697,10 @@ function loadGameOverScreen() {
             <h2 id="finalScore">test</h2>
             <button id="reStartBtn" class ="button">Play again!</button>
         </div>
-        <a href="https://www.linkedin.com/in/sof%C3%ADa-s%C3%A1nchez-urbano-76953b64/" id="copyright">©2021 created by Sofía Sánchez Urbano</a>
+        <div id="copyright">
+            <p>©2021 created by</p>
+            <a href="https://www.linkedin.com/in/sof%C3%ADa-s%C3%A1nchez-urbano-76953b64/">Sofía Sánchez Urbano</a>
+        </div>
         `
     body.appendChild(gameOverScreen)
 
