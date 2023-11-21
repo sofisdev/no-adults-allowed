@@ -1,8 +1,8 @@
 # No Adults Allowed
 
-[Click here to see deployed game](https://sofsanurb.github.io/no-adults-allowed/)
+[Click here to see deployed game](https://sofisdev.github.io/no-adults-allowed/)
 
-![](https://github.com/SofSanUrb/no-adults-allowed/blob/master/images/gamescreen.PNG)
+![](https://github.com/sofisdev/no-adults-allowed/blob/master/images/gamescreen.PNG)
 
 [![License: CC BY-NC-SA 4.0](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
 
@@ -118,8 +118,8 @@ Definition of the different states and their transition (transition functions)
 
 ### Git
 - [Repository Link](https://github.com/SofSanUrb/no-adults-allowed)
-- [Let's play!](https://sofsanurb.github.io/no-adults-allowed/)
+- [Let's play!](https://sofisdev.github.io/no-adults-allowed/)
 
 ## Contact Info
-- [Github](https://github.com/SofSanUrb)
+- [Github](https://github.com/sofisdev)
 - [LinkedIn](https://www.linkedin.com/in/sof%C3%ADa-s%C3%A1nchez-urbano-76953b64/)
